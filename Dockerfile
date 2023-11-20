@@ -3,11 +3,19 @@ WORKDIR /app
 ADD ./backend .
 RUN cargo install --path .
 
-FROM ubuntu:jammy as runner
+FROM node:latest as vitebuilder
+WORKDIR /app
+ADD ./frontend .
+RUN npm install
+RUN npm run build
+
+FROM nginx as runner
 RUN apt-get update && apt-get install -y supervisor
 RUN mkdir -p /var/log/supervisor
 COPY ./deployment/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY --from=rustbuilder /usr/local/cargo/bin/pibasho-backend /usr/local/bin/pibasho-backend
+COPY --from=vitebuilder /app/dist /usr/share/nginx/html
 ENV ROCKET_ADDRESS=0.0.0.0
-EXPOSE 8000
-CMD ["/usr/bin/supervisord"]
+EXPOSE 8000 80
+# CMD ["pibasho-backend"]
+CMD ["supervisord"]
