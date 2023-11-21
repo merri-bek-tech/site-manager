@@ -6,16 +6,13 @@
     "publish": false
   },
   "plugins": {
-    "@release-it/bumper": {
+    "@j-ulrich/release-it-regex-bumper": {
       "out": [
         {
           "file": "./frontend/package.json",
-          "type": "application/json"
-        }
-      ]
-    },
-    "@j-ulrich/release-it-regex-bumper": {
-      "out": [
+          "search": "\"version\": \"\\d+\\.\\d+\\.\\d+\"",
+          "replace": "\"version\": \"{{version}}\""
+        },
         {
             "file": "./backend/Cargo.toml",
             "search": "version = \"\\d+\\.\\d+\\.\\d+\"",

@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.2",
   "devDependencies": {
-    "@release-it/bumper": "^6.0.1",
+    "@j-ulrich/release-it-regex-bumper": "^5.0.0",
     "release-it": "^16.0.0"
   }
 }
