@@ -1,8 +1,8 @@
 name: Publish Docker image
 
 on:
-  release:
-    types: [published]
+  push:
+    tags: [ 'v*.*.*' ]
 
 jobs:
   build-and-push:
@@ -22,9 +22,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Get ref
+        id: parse_ref
+        run: |
+          echo ::set-output name=tag::${GITHUB_REF/refs\/tags\//}
+
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
           context: .
           platforms: linux/amd64,linux/arm/v7
           push: true
+          tags: |
+            ${{ github.repository_owner }}/${{ github.repository }}:latest
+            ${{ github.repository_owner }}/${{ github.repository }}:${{ steps.parse_ref.outputs.tag }}

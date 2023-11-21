@@ -1,6 +1,7 @@
 {
   "github": {
-    "release": true
+    "release": true,
+    "tagName": "v${version}"
   },
   "npm": {
     "publish": false
