@@ -11,10 +11,15 @@
         {
           "file": "./frontend/package.json",
           "type": "application/json"
-        },
+        }
+      ]
+    },
+    "@j-ulrich/release-it-regex-bumper": {
+      "out": [
         {
-          "file": "./backend/Cargo.toml",
-          "type": "text/toml"
+            "file": "./backend/Cargo.toml",
+            "search": "version = \"\\d+\\.\\d+\\.\\d+\"",
+            "replace": "Version \"{{version}}\""
         }
       ]
     }
