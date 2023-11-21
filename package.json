@@ -1,7 +1,7 @@
 {
   "name": "pibasho",
   "private": true,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "devDependencies": {
     "@release-it/bumper": "^6.0.1",
     "release-it": "^17.0.0"

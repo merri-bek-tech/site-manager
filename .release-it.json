@@ -7,10 +7,16 @@
   },
   "plugins": {
     "@release-it/bumper": {
-      "out": {
-        "file": "./frontend/package.json",
-        "type": "application/json"
-      }
+      "out": [
+        {
+          "file": "./frontend/package.json",
+          "type": "application/json"
+        },
+        {
+          "file": "./backend/Cargo.toml",
+          "type": "text/toml"
+        }
+      ]
     }
   }
 }
