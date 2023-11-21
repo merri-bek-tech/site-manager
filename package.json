@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "release-it": "^17.0.0"
+  }
+}
