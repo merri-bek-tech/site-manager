@@ -4,5 +4,13 @@
   },
   "npm": {
     "publish": false
+  },
+  "plugins": {
+    "@release-it/bumper": {
+      "out": {
+        "file": "./frontend/package.json",
+        "type": "application/json"
+      }
+    }
   }
 }
