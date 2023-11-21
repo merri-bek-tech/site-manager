@@ -34,5 +34,5 @@ jobs:
           platforms: linux/amd64,linux/arm/v7
           push: true
           tags: |
-            ${{ github.repository_owner }}/${{ github.repository }}:latest
-            ${{ github.repository_owner }}/${{ github.repository }}:${{ steps.parse_ref.outputs.tag }}
+            redbugcollective/${{ github.repository }}:latest
+            redbugcollective/${{ github.repository }}:${{ steps.parse_ref.outputs.tag }}
