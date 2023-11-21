@@ -1,9 +1,8 @@
 name: Publish Docker image
 
 on:
-  push
-  # release:
-  #   types: [published]
+  release:
+    types: [published]
 
 jobs:
   build-and-push:
@@ -28,4 +27,4 @@ jobs:
         with:
           context: .
           platforms: linux/amd64,linux/arm/v7
-          push: false
+          push: true
