@@ -1,7 +1,7 @@
 {
   "name": "pibasho",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "devDependencies": {
     "release-it": "^17.0.0"
   }
