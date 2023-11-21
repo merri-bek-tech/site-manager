@@ -33,4 +33,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm/v7
           push: true
-          tags: redbugcollective/pibasho:latest
+          tags: redbugcollective/pibasho:latest,redbugcollective/pibasho:${{ steps.parse_ref.outputs.tag }}
