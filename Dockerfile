@@ -1,3 +1,10 @@
+# FRONTEND BUILDER
+FROM --platform=$BUILDPLATFORM node:latest as vitebuilder
+ADD ./frontend .
+RUN npm install
+RUN npm run build
+
+# BACKEND BUILDER
 FROM --platform=$BUILDPLATFORM rust:1 as rustbuilder
 ARG TARGETARCH
 WORKDIR /app
@@ -18,12 +25,7 @@ ADD ./backend .
 RUN cargo build --release --target $(cat /app/.platform)
 RUN cp /app/target/$(cat /app/.platform)/release/pibasho-backend /app/pibasho-backend
 
-# Compile the frontend
-FROM --platform=$BUILDPLATFORM node:latest as vitebuilder
-ADD ./frontend .
-RUN npm install
-RUN npm run build
-
+# RUNNER
 FROM nginx as runner
 RUN apt-get update && apt-get install -y supervisor
 RUN mkdir -p /var/log/supervisor
