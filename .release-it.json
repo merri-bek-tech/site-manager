@@ -15,9 +15,9 @@
           "replace": "\"version\": \"{{version}}\""
         },
         {
-            "file": "./backend/Cargo.toml",
-            "search": "version = \"\\d+\\.\\d+\\.\\d+\"",
-            "replace": "version = \"{{version}}\""
+          "file": "./backend/Cargo.toml",
+          "search": "version = \"\\d+\\.\\d+\\.\\d+\"",
+          "replace": "version = \"{{version}}\""
         }
       ]
     }
