@@ -4,9 +4,9 @@ import { ChakraProvider } from "@chakra-ui/react"
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/admin",
     element: <Layout />,
-    children: [{ path: "/", element: <h1>Home</h1> }],
+    children: [{ path: "", element: <h1>Home</h1> }],
   },
 ])
 
