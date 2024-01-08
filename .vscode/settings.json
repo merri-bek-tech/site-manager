@@ -1,0 +1,18 @@
+{
+  "editor.formatOnSave": true,
+  "html.format.wrapLineLength": 120,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true,
+    "backend/target": true
+  },
+  "explorerExclude.backup": {}
+}

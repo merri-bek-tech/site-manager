@@ -1,11 +1,14 @@
-import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom"
+import { Stack, Container } from "@chakra-ui/react"
+import Navbar from "../components/Navbar"
 
 export default function Layout() {
   return (
-    <div>
-      <h1>Layout</h1>
-      <p>TODO: Add a navigation menu here</p>
-      <Outlet />
-    </div>
+    <Stack h="100vh" w="100vw">
+      <Navbar />
+      <Container padding={4}>
+        <Outlet />
+      </Container>
+    </Stack>
   )
 }
