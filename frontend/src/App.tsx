@@ -1,11 +1,20 @@
-import './App.css'
+import { RouterProvider, createBrowserRouter } from "react-router-dom"
+import Layout from "./pages/Layout"
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      { path: "/", element: <h1>Home</h1> }
+    ]
+  },
+])
 
 function App() {
 
   return (
-    <div>
-      hello world
-    </div>
+    <RouterProvider router={router} />
   )
 }
 
