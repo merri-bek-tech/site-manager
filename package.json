@@ -1,7 +1,7 @@
 {
   "name": "pibasho",
   "private": true,
-  "version": "0.1.13",
+  "version": "0.1.14",
   "devDependencies": {
     "@j-ulrich/release-it-regex-bumper": "^5.0.0",
     "release-it": "^16.3.0"
