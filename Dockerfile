@@ -1,8 +1,8 @@
 # FRONTEND BUILDER
 FROM --platform=$BUILDPLATFORM node:latest as vitebuilder
+WORKDIR /app
 ADD ./frontend .
-RUN npm install
-RUN npm run build
+RUN npm install && npm run build
 
 # BACKEND BUILDER
 FROM --platform=$BUILDPLATFORM rust:1 as rustbuilder
