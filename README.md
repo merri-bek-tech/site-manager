@@ -20,4 +20,4 @@ Running the frontend us done with `npm run dev`
 
 ### Generating a release
 
-We use [Release it](https://github.com/release-it/release-it). To run it, use `npm exec release`
+We use [Release it](https://github.com/release-it/release-it). To run it, use `npm run release`
