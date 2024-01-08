@@ -18,8 +18,8 @@ ADD ./backend .
 RUN cargo build --release --target $(cat /app/.platform)
 RUN cp /app/target/$(cat /app/.platform)/release/pibasho-backend /app/pibasho-backend
 
+# Compile the frontend
 FROM --platform=$BUILDPLATFORM node:latest as vitebuilder
-WORKDIR /app
 ADD ./frontend .
 RUN npm install
 RUN npm run build
