@@ -12,7 +12,10 @@
     "**/.project": true,
     "**/.settings": true,
     "**/.factorypath": true,
-    "backend/target": true
+    "backend/target": true,
+    "frontend/dist": true,
+    "node_modules": true
   },
-  "explorerExclude.backup": {}
+  "explorerExclude.backup": {},
+  "rust-analyzer.cargo.sysroot": "discover"
 }
