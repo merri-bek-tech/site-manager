@@ -7,6 +7,7 @@ publish = false
 [dependencies]
 aquadoggo = "0.7.0"
 p2panda-rs = "0.8.1"
+rocket_cors = "0.6.0"
 
 [dependencies.rocket]
 version = "0.5.0"

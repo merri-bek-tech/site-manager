@@ -3,6 +3,7 @@
     "aquadoggo"
   ],
   "rust-analyzer.linkedProjects": [
+    "./Cargo.toml",
     "./Cargo.toml"
   ]
 }

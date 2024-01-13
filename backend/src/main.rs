@@ -4,6 +4,7 @@ use aquadoggo::{Configuration, Node};
 use p2panda_rs::identity::KeyPair;
 
 mod routes;
+mod fairings;
 
 #[macro_use] extern crate rocket;
 
@@ -26,6 +27,7 @@ async fn rocket() -> _ {
     });
 
     rocket::build()
+        .attach(fairings::cors::cors_fairing())
         .mount("/", routes![hello])
         .mount("/panda", routes::panda_node::routes())
 }
