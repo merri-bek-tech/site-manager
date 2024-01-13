@@ -3,6 +3,8 @@ use rocket::tokio::time::{sleep, Duration};
 use aquadoggo::{Configuration, Node};
 use p2panda_rs::identity::KeyPair;
 
+mod routes;
+
 #[macro_use] extern crate rocket;
 
 #[cfg(test)] mod tests;
@@ -25,4 +27,5 @@ async fn rocket() -> _ {
 
     rocket::build()
         .mount("/", routes![hello])
+        .mount("/panda", routes::panda_node::routes())
 }

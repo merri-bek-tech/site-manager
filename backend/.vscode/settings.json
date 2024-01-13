@@ -1,5 +1,8 @@
 {
   "cSpell.words": [
     "aquadoggo"
+  ],
+  "rust-analyzer.linkedProjects": [
+    "./Cargo.toml"
   ]
 }
