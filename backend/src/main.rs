@@ -7,10 +7,9 @@ use p2panda_rs::identity::KeyPair;
 
 #[cfg(test)] mod tests;
 
-//   http://127.0.0.1:8000/
 #[get("/")]
 fn hello() -> String {
-    "Hi!".to_string()
+    "OK".to_string()
 }
 
 #[launch]

@@ -1,14 +1,23 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
 import Layout from "./pages/Layout"
 import { ChakraProvider } from "@chakra-ui/react"
+import PangaNodeStatus from "./contexts/panda_node"
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        { path: "", element: <h1>Home</h1> },
+        { path: "node", element: <PangaNodeStatus /> },
+      ],
+    },
+  ],
   {
-    path: "/admin",
-    element: <Layout />,
-    children: [{ path: "", element: <h1>Home</h1> }],
-  },
-])
+    basename: "/admin",
+  }
+)
 
 function App() {
   return (
