@@ -1,15 +1,16 @@
-use std::path::PathBuf;
-
-// use rocket::tokio::time::{sleep, Duration};
-use aquadoggo::{Configuration, Node, AllowList, NetworkConfiguration};
+use std::sync::Mutex;
+use std::time::Duration;
+use aquadoggo::{Configuration, Node};
 use p2panda_rs::identity::KeyPair;
 use rocket::tokio::task::spawn;
-use rocket::{Rocket, Orbit};
+use rocket::tokio::time::sleep;
+use rocket::{Rocket, Orbit, tokio};
 use rocket::fairing::{Fairing, Info, Kind};
+use tokio_util::sync::CancellationToken;
 
 #[derive(Default)]
 pub struct PandaNode {
-
+    cancellation_token: Mutex<Option<CancellationToken>>,
 }
 
 #[rocket::async_trait]
@@ -17,48 +18,44 @@ impl Fairing for PandaNode {
     fn info(&self) -> Info {
         Info {
             name: "PandaNode",
-            kind: Kind::Liftoff | Kind::Singleton,
+            kind: Kind::Liftoff | Kind::Shutdown | Kind::Singleton,
         }
     }
 
-    // async fn on_ignite(&self, rocket: Rocket<Build>) -> fairing::Result {
-    //     /* ... */
-    // }
-
     async fn on_liftoff(&self, _rocket: &Rocket<Orbit>) {
-        // instead of the above, build the configuration not using a builder or default
-        let config = Configuration {
-            allow_schema_ids: AllowList::Wildcard,
-            database_url: "sqlite::memory:".into(),
-            database_max_connections: 32,
-            http_port: 2020,
-            blobs_base_path: PathBuf::new(),
-            worker_pool_size: 16,
-            network: NetworkConfiguration::default(),
-        };
-
+        let config: Configuration = Default::default();
         let key_pair = KeyPair::new();
 
-        spawn(async {
-            println!("P2Panda: Starting node");
+        let token = CancellationToken::new();
+        let mut token_lock = self.cancellation_token.lock().unwrap();
+        *token_lock = Some(token.clone());
+
+        println!("About to spawn node");
+
+        spawn(async move {
+            println!("Aquadoggo: Starting node");
             let node = Node::start(key_pair, config).await;
-            println!("P2Panda: Node started");
-            node.on_exit().await;
-            println!("P2Panda: Node exited");
-            node.shutdown().await;
-            println!("P2Panda: Node shutdown");
+
+            tokio::select! {
+                _ = token.cancelled() => {
+                    println!("Aquadoggo: Token cancelled, about to shutdown Aquadoggo");
+                    node.shutdown().await;
+                    println!("Aquadoggo: Node shutdown");                }
+                _ = node.on_exit() => {
+                    println!("Aquadoggo: on_exit has completed")
+                }
+            }
         });
     }
 
-    // async fn on_request(&self, req: &mut Request<'_>, data: &mut Data<'_>) {
-    //     /* ... */
-    // }
-
-    // async fn on_response<'r>(&self, req: &'r Request<'_>, res: &mut Response<'r>) {
-    //     /* ... */
-    // }
-
-    // async fn on_shutdown(&self, rocket: &Rocket<Orbit>) {
-    //     /* ... */
-    // }
+    async fn on_shutdown(&self, _rocket: &Rocket<Orbit>) {
+        println!("Fairing: on_shutdown");
+        {
+            let mut token_lock = self.cancellation_token.lock().unwrap();
+            if let Some(token) = token_lock.take() {
+                token.cancel();
+            }
+        }
+        sleep(Duration::from_secs(2)).await;
+    }
 }
