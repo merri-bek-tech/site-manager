@@ -1,16 +1,52 @@
 use std::sync::Mutex;
-use std::time::Duration;
 use aquadoggo::{Configuration, Node};
 use p2panda_rs::identity::KeyPair;
-use rocket::tokio::task::spawn;
-use rocket::tokio::time::sleep;
-use rocket::{Rocket, Orbit, tokio};
+use rocket::{Rocket, Orbit};
 use rocket::fairing::{Fairing, Info, Kind};
-use tokio_util::sync::CancellationToken;
 
 #[derive(Default)]
 pub struct PandaNode {
-    cancellation_token: Mutex<Option<CancellationToken>>,
+    node: Mutex<Option<Node>>,
+}
+
+impl PandaNode {
+    // This function is an implementation detail.
+    async fn start_node(&self, config: Configuration, key_pair: KeyPair) {
+        let maybe_node = self.get_node();
+        if maybe_node.is_some() {
+            panic!("Aquadoggo: Node already running");
+        }
+
+        println!("Aquadoggo: Starting node");
+        let node = Node::start(key_pair, config).await;
+        println!("Aquadoggo: Node started");
+        self.set_node(Some(node));
+    }
+
+    async fn shutdown_node(&self) {
+        let maybe_node = self.get_node();
+
+        if maybe_node.is_some() {
+            println!("Aquadoggo: About to shutdown node");
+            maybe_node.unwrap().shutdown().await;
+            self.clear_node();
+            println!("Aquadoggo: Node shutdown");
+        }
+    }
+
+    fn clear_node(&self) {
+        self.set_node(None);
+    }
+
+    fn set_node(&self, maybe_node: Option<Node>) {
+        let mut node_lock = self.node.lock().unwrap();
+        *node_lock = maybe_node;
+    }
+
+    fn get_node(&self) -> Option<Node> {
+        let mut node_lock = self.node.lock().unwrap();
+        node_lock.take()
+    }
 }
 
 #[rocket::async_trait]
@@ -26,36 +62,12 @@ impl Fairing for PandaNode {
         let config: Configuration = Default::default();
         let key_pair = KeyPair::new();
 
-        let token = CancellationToken::new();
-        let mut token_lock = self.cancellation_token.lock().unwrap();
-        *token_lock = Some(token.clone());
-
-        println!("About to spawn node");
-
-        spawn(async move {
-            println!("Aquadoggo: Starting node");
-            let node = Node::start(key_pair, config).await;
-
-            tokio::select! {
-                _ = token.cancelled() => {
-                    println!("Aquadoggo: Token cancelled, about to shutdown Aquadoggo");
-                    node.shutdown().await;
-                    println!("Aquadoggo: Node shutdown");                }
-                _ = node.on_exit() => {
-                    println!("Aquadoggo: on_exit has completed")
-                }
-            }
-        });
+        self.start_node(config, key_pair).await;
     }
 
     async fn on_shutdown(&self, _rocket: &Rocket<Orbit>) {
         println!("Fairing: on_shutdown");
-        {
-            let mut token_lock = self.cancellation_token.lock().unwrap();
-            if let Some(token) = token_lock.take() {
-                token.cancel();
-            }
-        }
-        sleep(Duration::from_secs(2)).await;
+
+        self.shutdown_node().await;
     }
 }
