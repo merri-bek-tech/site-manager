@@ -10,7 +10,6 @@ import {
   VStack,
   HStack,
   Box,
-  Button,
 } from "@chakra-ui/react"
 import deepseaPanda from "../../../assets/deepsea-panda.svg"
 import { NodeStatus } from "../types"
