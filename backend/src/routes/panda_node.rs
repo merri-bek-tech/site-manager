@@ -22,6 +22,11 @@ fn frodo() -> Json<Person> {
     })
 }
 
+#[post("/stop", format = "json")]
+fn stop() {
+    println!("stop");
+}
+
 pub fn routes() -> Vec<Route> {
-    routes![hello, frodo]
+    routes![hello, frodo, stop]
 }

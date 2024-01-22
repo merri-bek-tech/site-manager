@@ -18,8 +18,8 @@ fn hello() -> String {
 #[rocket::main]
 async fn rocket() -> _ {
     rocket::build()
-        .attach(infra::cors::cors_fairing())
         .manage(AquadoggoContainer::default())
+        .attach(infra::cors::cors_fairing())
         .attach(AquadoggoFairing::default())
         .mount("/", routes![hello])
         .mount("/panda", routes::panda_node::routes())

@@ -9,11 +9,17 @@ import {
   Badge,
   VStack,
   HStack,
+  Box,
+  Button,
 } from "@chakra-ui/react"
 import deepseaPanda from "../../../assets/deepsea-panda.svg"
 
-interface PandaStatus {
+export interface PandaStatus {
   state: "offline" | "running" | "unknown"
+}
+
+export interface PandaNodeControl {
+  stop: () => void
 }
 
 function colorSchemeForState(state: PandaStatus["state"]): string {
@@ -29,8 +35,10 @@ function colorSchemeForState(state: PandaStatus["state"]): string {
 
 export default function PandaNodeStatusDisplay({
   status,
+  control,
 }: {
   status: PandaStatus
+  control: PandaNodeControl
 }) {
   return (
     <VStack alignItems="stretch">
@@ -55,6 +63,13 @@ export default function PandaNodeStatusDisplay({
               {status.state}
             </Badge>
           </HStack>
+          <Box>
+            {status.state === "running" && (
+              <Button size="sm" colorScheme="orange" onClick={control.stop}>
+                Stop
+              </Button>
+            )}
+          </Box>
         </CardBody>
       </Card>
     </VStack>

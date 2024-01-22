@@ -1,5 +1,8 @@
 import { useEffect } from "react"
-import PandaNodeStatusDisplay from "../components/PandaNodeStatusDisplay"
+import PandaNodeStatusDisplay, {
+  PandaStatus,
+} from "../components/PandaNodeStatusDisplay"
+import PandaNodeApi from "../api"
 
 export default function PandaNodeStatus() {
   useEffect(() => {
@@ -8,5 +11,15 @@ export default function PandaNodeStatus() {
       .then((data) => console.log(data))
   })
 
-  return <PandaNodeStatusDisplay status={{ state: "unknown" }} />
+  const api = new PandaNodeApi("http://localhost:8000/panda")
+
+  const control = {
+    stop: () => api.stop(),
+  }
+
+  const status: PandaStatus = {
+    state: "running",
+  }
+
+  return <PandaNodeStatusDisplay status={status} control={control} />
 }
