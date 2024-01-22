@@ -1,24 +1,22 @@
-import { useEffect } from "react"
-import PandaNodeStatusDisplay, {
-  PandaStatus,
-} from "../components/PandaNodeStatusDisplay"
+import { useEffect, useState } from "react"
+import PandaNodeStatusDisplay from "../components/PandaNodeStatusDisplay"
 import PandaNodeApi from "../api"
+import { NodeStatus } from "../types"
 
 export default function PandaNodeStatus() {
-  useEffect(() => {
-    fetch("http://localhost:8000/panda/frodo")
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-  })
-
   const api = new PandaNodeApi("http://localhost:8000/panda")
+  const [status, setStatus] = useState<NodeStatus>("Unknown")
+
+  useEffect(() => {
+    api.status().then((newStatus) => {
+      console.log("got new status", newStatus)
+      setStatus(newStatus)
+    })
+  }, [])
 
   const control = {
-    stop: () => api.stop(),
-  }
-
-  const status: PandaStatus = {
-    state: "running",
+    stop: () => api.stop().then(setStatus),
+    start: () => api.start().then(setStatus),
   }
 
   return <PandaNodeStatusDisplay status={status} control={control} />

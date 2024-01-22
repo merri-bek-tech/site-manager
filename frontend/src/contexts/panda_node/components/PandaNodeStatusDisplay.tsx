@@ -13,22 +13,20 @@ import {
   Button,
 } from "@chakra-ui/react"
 import deepseaPanda from "../../../assets/deepsea-panda.svg"
-
-export interface PandaStatus {
-  state: "offline" | "running" | "unknown"
-}
+import { NodeStatus } from "../types"
 
 export interface PandaNodeControl {
   stop: () => void
+  start: () => void
 }
 
-function colorSchemeForState(state: PandaStatus["state"]): string {
+function colorSchemeForState(state: NodeStatus): string {
   switch (state) {
-    case "offline":
+    case "Offline":
       return "red"
-    case "running":
+    case "Running":
       return "green"
-    case "unknown":
+    case "Unknown":
       return "gray"
   }
 }
@@ -37,7 +35,7 @@ export default function PandaNodeStatusDisplay({
   status,
   control,
 }: {
-  status: PandaStatus
+  status: NodeStatus
   control: PandaNodeControl
 }) {
   return (
@@ -59,17 +57,23 @@ export default function PandaNodeStatusDisplay({
         <CardBody>
           <HStack>
             <Text>Node status</Text>
-            <Badge colorScheme={colorSchemeForState(status.state)}>
-              {status.state}
-            </Badge>
+            <Box flexGrow={1}>
+              <Badge colorScheme={colorSchemeForState(status)}>{status}</Badge>
+            </Box>
+
+            <Box>
+              {status === "Running" && (
+                <Button size="sm" colorScheme="orange" onClick={control.stop}>
+                  Stop
+                </Button>
+              )}
+              {status === "Offline" && (
+                <Button size="sm" colorScheme="green" onClick={control.start}>
+                  Start
+                </Button>
+              )}
+            </Box>
           </HStack>
-          <Box>
-            {status.state === "running" && (
-              <Button size="sm" colorScheme="orange" onClick={control.stop}>
-                Stop
-              </Button>
-            )}
-          </Box>
         </CardBody>
       </Card>
     </VStack>

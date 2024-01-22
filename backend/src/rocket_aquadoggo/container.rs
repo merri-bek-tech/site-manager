@@ -1,6 +1,15 @@
 use std::sync::Mutex;
 use aquadoggo::{Configuration, Node};
 use p2panda_rs::identity::KeyPair;
+use rocket::serde::json::Json;
+use rocket::serde::{Serialize, Deserialize};
+
+#[derive(Serialize, Deserialize)]
+#[serde(crate = "rocket::serde")]
+pub enum NodeStatus {
+    Running,
+    Offline,
+}
 
 #[derive(Default)]
 pub struct AquadoggoContainer {
@@ -8,6 +17,15 @@ pub struct AquadoggoContainer {
 }
 
 impl AquadoggoContainer {
+    pub fn status(&self) -> NodeStatus {
+        let maybe_node = self.get_node();
+        if maybe_node.is_some() {
+            NodeStatus::Running
+        } else {
+            NodeStatus::Offline
+        }
+    }
+
     pub async fn start_node(&self, config: Configuration, key_pair: KeyPair) {
         let maybe_node = self.get_node();
         if maybe_node.is_some() {

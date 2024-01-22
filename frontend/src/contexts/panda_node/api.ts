@@ -1,10 +1,4 @@
-// const PandaNodeApi = {
-//   stop: () => {
-//     return fetch("/panda/stop", {
-//       method: "POST",
-//     })
-//   },
-// }
+import { NodeStatus } from "./types"
 
 const defaultHeaders = {
   "Content-Type": "application/json",
@@ -17,10 +11,32 @@ class PandaNodeApi {
     this.base_url = base_url
   }
 
-  stop() {
+  stop(): Promise<NodeStatus> {
     return fetch(`${this.base_url}/stop`, {
       method: "POST",
       headers: defaultHeaders,
+    }).then(this.handleStatusResponse.bind(this))
+  }
+
+  start(): Promise<NodeStatus> {
+    return fetch(`${this.base_url}/start`, {
+      method: "POST",
+      headers: defaultHeaders,
+    }).then(this.handleStatusResponse.bind(this))
+  }
+
+  status(): Promise<NodeStatus> {
+    return fetch(`${this.base_url}/status`, {
+      method: "GET",
+      headers: defaultHeaders,
+    }).then(this.handleStatusResponse.bind(this))
+  }
+
+  // Private
+
+  private handleStatusResponse(response: Response): Promise<NodeStatus> {
+    return response.json().then((json) => {
+      return json.status as NodeStatus
     })
   }
 }
