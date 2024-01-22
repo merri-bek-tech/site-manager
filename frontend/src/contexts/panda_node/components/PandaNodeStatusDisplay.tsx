@@ -14,10 +14,11 @@ import {
 } from "@chakra-ui/react"
 import deepseaPanda from "../../../assets/deepsea-panda.svg"
 import { NodeStatus } from "../types"
+import ButtonWithLoading from "./ButtonWithLoading"
 
 export interface PandaNodeControl {
-  stop: () => void
-  start: () => void
+  stop: () => Promise<void>
+  start: () => Promise<void>
 }
 
 function colorSchemeForState(state: NodeStatus): string {
@@ -63,14 +64,22 @@ export default function PandaNodeStatusDisplay({
 
             <Box>
               {status === "Running" && (
-                <Button size="sm" colorScheme="orange" onClick={control.stop}>
+                <ButtonWithLoading
+                  size="sm"
+                  colorScheme="orange"
+                  onClick={control.stop}
+                >
                   Stop
-                </Button>
+                </ButtonWithLoading>
               )}
               {status === "Offline" && (
-                <Button size="sm" colorScheme="green" onClick={control.start}>
+                <ButtonWithLoading
+                  size="sm"
+                  colorScheme="green"
+                  onClick={control.start}
+                >
                   Start
-                </Button>
+                </ButtonWithLoading>
               )}
             </Box>
           </HStack>
