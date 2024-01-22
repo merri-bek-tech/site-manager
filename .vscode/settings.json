@@ -17,5 +17,6 @@
     "node_modules": true
   },
   "explorerExclude.backup": {},
-  "rust-analyzer.cargo.sysroot": "discover"
+  "rust-analyzer.cargo.sysroot": "discover",
+  "cSpell.words": ["Aquadoggo"]
 }
