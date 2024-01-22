@@ -1,5 +1,5 @@
-use std::sync::Mutex;
-use rocket_aquadoggo::aquadoggo_fairing::AquadoggoContainer;
+use rocket_aquadoggo::aquadoggo_fairing::AquadoggoFairing;
+use rocket_aquadoggo::container::AquadoggoContainer;
 
 mod routes;
 mod infra;
@@ -19,8 +19,8 @@ fn hello() -> String {
 async fn rocket() -> _ {
     rocket::build()
         .attach(infra::cors::cors_fairing())
-        .attach(AquadoggoContainer::default())
-        .manage(AquadoggoContainer { node: Mutex::new(None) })
+        .manage(AquadoggoContainer::default())
+        .attach(AquadoggoFairing::default())
         .mount("/", routes![hello])
         .mount("/panda", routes::panda_node::routes())
 }
