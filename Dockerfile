@@ -32,7 +32,7 @@ RUN mkdir -p /var/log/supervisor
 COPY ./deployment/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./deployment/nginx.default.conf /etc/nginx/conf.d/default.conf
 COPY --from=rustbuilder /app/pibasho-backend /usr/local/bin/pibasho-backend
-COPY --from=vitebuilder /app/dist /usr/share/nginx/html
+COPY --from=vitebuilder /app/dist /usr/share/nginx/html/admin/
 ENV ROCKET_ADDRESS=0.0.0.0
 EXPOSE 8000 80
 # CMD ["pibasho-backend"]
