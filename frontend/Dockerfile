@@ -1,7 +1,7 @@
 # FRONTEND BUILDER
 FROM --platform=$BUILDPLATFORM node:latest as vitebuilder
 WORKDIR /app
-ADD ./frontend .
+ADD . .
 RUN npm install && npm run build
 
 # RUNNER
