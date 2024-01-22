@@ -5,11 +5,11 @@ use rocket::{Rocket, Orbit};
 use rocket::fairing::{Fairing, Info, Kind};
 
 #[derive(Default)]
-pub struct PandaNode {
-    node: Mutex<Option<Node>>,
+pub struct AquadoggoContainer {
+    pub node: Mutex<Option<Node>>,
 }
 
-impl PandaNode {
+impl AquadoggoContainer {
     // This function is an implementation detail.
     async fn start_node(&self, config: Configuration, key_pair: KeyPair) {
         let maybe_node = self.get_node();
@@ -50,10 +50,10 @@ impl PandaNode {
 }
 
 #[rocket::async_trait]
-impl Fairing for PandaNode {
+impl Fairing for AquadoggoContainer {
     fn info(&self) -> Info {
         Info {
-            name: "PandaNode",
+            name: "AquadoggoContainer",
             kind: Kind::Liftoff | Kind::Shutdown | Kind::Singleton,
         }
     }

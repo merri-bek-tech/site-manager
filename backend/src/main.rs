@@ -1,6 +1,9 @@
+use std::sync::Mutex;
+use rocket_aquadoggo::aquadoggo_fairing::AquadoggoContainer;
 
 mod routes;
-mod fairings;
+mod infra;
+mod rocket_aquadoggo;
 
 #[macro_use] extern crate rocket;
 
@@ -15,8 +18,9 @@ fn hello() -> String {
 #[rocket::main]
 async fn rocket() -> _ {
     rocket::build()
-        .attach(fairings::cors::cors_fairing())
-        .attach(fairings::panda_node::PandaNode::default())
+        .attach(infra::cors::cors_fairing())
+        .attach(AquadoggoContainer::default())
+        .manage(AquadoggoContainer { node: Mutex::new(None) })
         .mount("/", routes![hello])
         .mount("/panda", routes::panda_node::routes())
 }
