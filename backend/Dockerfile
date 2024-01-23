@@ -16,7 +16,9 @@ COPY deployment/cargo-config.toml ./.cargo/config
 
 # Compile the backend
 ADD . .
-RUN cargo build --release --target $(cat /app/.platform)
+# Build a release build once we have the hang of this working
+# RUN cargo build --release --target $(cat /app/.platform)
+RUN cargo build --target $(cat /app/.platform)
 RUN cp /app/target/$(cat /app/.platform)/release/pibasho-backend /app/pibasho-backend
 
 # RUNNER
