@@ -4,7 +4,7 @@ import PandaNodeApi from "../api"
 import { NodeStatus } from "../types"
 
 export default function PandaNodeStatus() {
-  const api = new PandaNodeApi("http://localhost:8000/panda")
+  const api = new PandaNodeApi()
   const [status, setStatus] = useState<NodeStatus>("Unknown")
 
   useEffect(() => {
@@ -12,6 +12,8 @@ export default function PandaNodeStatus() {
       console.log("got new status", newStatus)
       setStatus(newStatus)
     })
+
+    console.log("env", import.meta.env)
   }, [])
 
   const control = {

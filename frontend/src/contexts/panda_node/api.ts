@@ -4,11 +4,17 @@ const defaultHeaders = {
   "Content-Type": "application/json",
 }
 
+const devHost = "http://localhost:8000"
+function getApiHost(path: string | undefined): string {
+  const base_url: string = import.meta.env.VITE_API_HOST || devHost
+  return base_url + path
+}
+
 class PandaNodeApi {
   base_url: string
 
-  constructor(base_url: string) {
-    this.base_url = base_url
+  constructor(base_url?: string) {
+    this.base_url = base_url || getApiHost("/panda")
   }
 
   stop(): Promise<NodeStatus> {
