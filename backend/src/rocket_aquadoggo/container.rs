@@ -1,7 +1,7 @@
 use std::sync::{Mutex, Arc};
 use aquadoggo::{Configuration, Node};
 use p2panda_rs::identity::KeyPair;
-use rocket::{serde::{Serialize, Deserialize}, tokio};
+use rocket::{local::asynchronous, serde::{Serialize, Deserialize}, tokio};
 // use env_logger::WriteStyle;
 // use log::LevelFilter;
 
@@ -35,30 +35,22 @@ impl AquadoggoContainer {
             panic!("Aquadoggo: Node already running");
         }
 
-        let node_copy = self.node.clone();
+        println!("Aquadoggo: Starting node");
+        let node = Node::start(key_pair, config).await;
+        println!("Aquadoggo: Node started");
 
-        tokio::spawn(async move {
-            println!("Aquadoggo: Starting tokio spawn");
+        // assign the node to the container
+        let mut node_lock = self.node.lock().unwrap();
+        *node_lock = Some(node);
 
-            println!("Aquadoggo: Starting node");
-            let node = Node::start(key_pair, config).await;
-            println!("Aquadoggo: Node started");
+        // can't do the following because the node has been moved
 
-            // assign the node to the container
-            let mut node_lock = node_copy.lock().unwrap();
-            *node_lock = Some(node);
+        // node.on_exit().await;
+        // println!("Aquadoggo: Node exited");
 
-            // // take another node copy
-            // let node_copy = node_copy.clone();
+        // node.shutdown().await;
+        // println!("Aquadoggo: Node shutdown");
 
-            // // wait for the node to exit
-            // let node_lock = node_copy.lock().unwrap();
-            // node.on_exit().await;
-            // println!("Aquadoggo: Node exited");
-
-            // node.shutdown().await;
-            // println!("Aquadoggo: Node shutdown");
-        });
     }
 
     pub async fn shutdown_node(&self) {
