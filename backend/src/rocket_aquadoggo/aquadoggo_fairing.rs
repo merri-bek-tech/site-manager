@@ -19,19 +19,21 @@ impl Fairing for AquadoggoFairing {
     }
 
     async fn on_liftoff(&self, rocket: &Rocket<Orbit>) {
-        // let container = rocket.state::<AquadoggoContainer>();
+        let container = rocket.state::<AquadoggoContainer>();
 
-        // let config: Configuration = Default::default();
-        // let key_pair = KeyPair::new();
+        let config: Configuration = Default::default();
+        let key_pair = KeyPair::new();
 
-        // container.unwrap().start_node(config, key_pair).await;
+        println!("Aquadoggo: About to start node");
+        container.unwrap().start_node(config, key_pair).await;
     }
 
     async fn on_shutdown(&self, rocket: &Rocket<Orbit>) {
-        let maybe_container = rocket.state::<AquadoggoContainer>();
+        // let maybe_container = rocket.state::<AquadoggoContainer>();
 
-        if let Some(container) = maybe_container {
-            container.shutdown_node().await;
-        }
+        // if let Some(container) = maybe_container {
+        //     println!("Aquadoggo: About to shutdown node");
+        //     container.shutdown_node().await;
+        // }
     }
 }
