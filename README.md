@@ -65,3 +65,7 @@ sudo apt-get install docker-ce docker-ce-cli docker-compose-plugin
 ```
 
 3. Test installation. You can test that docker is working by running `sudo docker run hello-world`
+
+## Part 3: Setup Pibasho
+
+1. Copy the compose.yml file from this project to the server. Eventually we want a nice way to pull it down from the internet
