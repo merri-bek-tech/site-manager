@@ -15,6 +15,11 @@ export default function Navbar() {
                   Panda Node
                 </Button>
               </Link>
+              <Link to="/apps">
+                <Button colorScheme="blue" variant="ghost">
+                  Apps
+                </Button>
+              </Link>
             </Box>
           </Stack>
 

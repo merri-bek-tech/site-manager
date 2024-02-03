@@ -1,1 +1,1 @@
-export { default } from "./pages/PandaNodeStatus"
+export { default as PandaNodeStatus } from "./pages/PandaNodeStatus"

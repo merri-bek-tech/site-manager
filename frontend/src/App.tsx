@@ -1,7 +1,8 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
 import Layout from "./pages/Layout"
 import { ChakraProvider } from "@chakra-ui/react"
-import PangaNodeStatus from "./contexts/panda_node"
+import { PandaNodeStatus } from "./contexts/panda_node"
+import { InstalledApps } from "./contexts/apps"
 
 const router = createBrowserRouter(
   [
@@ -10,7 +11,8 @@ const router = createBrowserRouter(
       element: <Layout />,
       children: [
         { path: "", element: <h1>Home</h1> },
-        { path: "node", element: <PangaNodeStatus /> },
+        { path: "node", element: <PandaNodeStatus /> },
+        { path: "apps", element: <InstalledApps /> },
       ],
     },
   ],
