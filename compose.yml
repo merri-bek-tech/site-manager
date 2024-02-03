@@ -13,4 +13,13 @@ services:
     environment:
       - VIRTUAL_HOST=*.local
       - VIRTUAL_PATH=/admin/
-      - VIRTUAL_PORT=80
+      - VITE_API_HOST=/admin_backend
+  pibasho-backend:
+    image: redbugcollective/pibasho-backend
+    expose:
+      - "8000"
+    environment:
+      - VIRTUAL_HOST=*.local
+      - VIRTUAL_PATH=/admin_backend/
+      - VIRTUAL_DEST=/
+      - ROCKET_LOG_LEVEL=debug
