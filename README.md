@@ -68,4 +68,11 @@ sudo apt-get install docker-ce docker-ce-cli docker-compose-plugin
 
 ## Part 3: Setup Pibasho
 
-1. Copy the compose.yml file from this project to the server. Eventually we want a nice way to pull it down from the internet
+1. Create the required directories on the pi using the following commands
+
+```
+sudo mkdir /pibasho
+sudo mkdir /pibasho/apps
+```
+
+2. Copy the compose.yml file from this project to the server. Eventually we want a nice way to pull it down from the internet
