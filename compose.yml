@@ -32,6 +32,7 @@ services:
       - "80"
     volumes:
       - /pibasho/apps/scrib:/app/www
+      - /pibasho/nginx/apps/scrib:/etc/nginx/conf.d/app
     environment:
       - VIRTUAL_HOST=*.local
       - VIRTUAL_PATH=/scrib/
