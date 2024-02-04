@@ -12,6 +12,7 @@ services:
       - "80"
     volumes:
       - /pibasho/apps:/usr/share/nginx/html/apps
+      - /pibasho/nginx/apps:/etc/nginx/conf.d/apps
     environment:
       - VIRTUAL_HOST=*.local
       - VIRTUAL_PATH=/admin/
