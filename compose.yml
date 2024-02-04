@@ -1,17 +1,11 @@
 services:
-  nginx-proxy:
-    image: nginxproxy/nginx-proxy
+  pibasho-frontend:
+    image: redbugcollective/pibasho-frontend
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-  pibasho-frontend:
-    image: redbugcollective/pibasho-frontend
-    expose:
-      - "80"
-    volumes:
-      - /pibasho/apps:/usr/share/nginx/html/apps
+      - /pibasho/www:/usr/share/nginx/html/apps
       - /pibasho/nginx/apps:/etc/nginx/conf.d/apps
     environment:
       - VIRTUAL_HOST=*.local
@@ -31,8 +25,8 @@ services:
     expose:
       - "80"
     volumes:
-      - /pibasho/apps/scrib:/app/www
-      - /pibasho/nginx/apps/scrib:/etc/nginx/conf.d/app
+      - /pibasho/www/books:/app/www
+      - /pibasho/nginx/apps/scrib:/app/nginx
     environment:
       - VIRTUAL_HOST=*.local
       - VIRTUAL_PATH=/scrib/
