@@ -1,3 +1,5 @@
+import { ErrorResult, OkResult } from "../shared/types"
+
 const defaultHeaders = {
   "Content-Type": "application/json",
 }
@@ -8,6 +10,8 @@ function getApiHost(path: string | undefined): string {
   return base_url + path
 }
 
+export type AppsResult = ErrorResult<string> | OkResult<string>
+
 class PandaAppsApi {
   base_url: string
 
@@ -15,11 +19,13 @@ class PandaAppsApi {
     this.base_url = base_url || getApiHost("/apps")
   }
 
-  listInstalledApps() {
-    fetch(`${this.base_url}/installed`, {
+  listInstalledApps(): Promise<AppsResult> {
+    return fetch(`${this.base_url}/installed`, {
       method: "GET",
       headers: defaultHeaders,
-    }).then((result) => console.log("result", result))
+    })
+      .then((response: Response) => response.json())
+      .then((json: any) => json as ErrorResult<string>)
   }
 }
 
