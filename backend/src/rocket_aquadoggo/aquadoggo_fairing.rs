@@ -1,13 +1,12 @@
 use aquadoggo::Configuration;
 use p2panda_rs::identity::KeyPair;
-use rocket::{Rocket, Orbit};
 use rocket::fairing::{Fairing, Info, Kind};
+use rocket::{Orbit, Rocket};
 
 use crate::rocket_aquadoggo::container::AquadoggoContainer;
 
 #[derive(Default)]
-pub struct AquadoggoFairing {
-}
+pub struct AquadoggoFairing {}
 
 #[rocket::async_trait]
 impl Fairing for AquadoggoFairing {
@@ -28,7 +27,7 @@ impl Fairing for AquadoggoFairing {
         container.unwrap().start_node(config, key_pair).await;
     }
 
-    async fn on_shutdown(&self, rocket: &Rocket<Orbit>) {
+    async fn on_shutdown(&self, _rocket: &Rocket<Orbit>) {
         // let maybe_container = rocket.state::<AquadoggoContainer>();
 
         // if let Some(container) = maybe_container {

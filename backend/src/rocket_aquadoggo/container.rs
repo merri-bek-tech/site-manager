@@ -1,9 +1,10 @@
-use std::sync::{Mutex, Arc};
 use aquadoggo::{Configuration, Node};
 use p2panda_rs::identity::KeyPair;
-use rocket::{local::asynchronous, serde::{Serialize, Deserialize}, tokio};
-// use env_logger::WriteStyle;
-// use log::LevelFilter;
+use rocket::{
+    serde::{Deserialize, Serialize},
+    tokio,
+};
+use std::sync::{Arc, Mutex};
 
 #[derive(Serialize, Deserialize, PartialEq)]
 #[serde(crate = "rocket::serde")]
@@ -50,7 +51,6 @@ impl AquadoggoContainer {
 
         // node.shutdown().await;
         // println!("Aquadoggo: Node shutdown");
-
     }
 
     pub async fn shutdown_node(&self) {
@@ -96,4 +96,3 @@ impl AquadoggoContainer {
     //     // Some(node_lock.unwrap()
     // }
 }
-

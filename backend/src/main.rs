@@ -23,4 +23,5 @@ async fn rocket() -> _ {
         .attach(AquadoggoFairing::default())
         .mount("/", routes![hello])
         .mount("/panda", routes::panda_node::routes())
+        .mount("/apps", routes::apps::routes())
 }
