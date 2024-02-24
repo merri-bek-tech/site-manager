@@ -15,6 +15,8 @@ services:
     image: redbugcollective/pibasho-backend
     expose:
       - "8000"
+    volumes:
+      - /pibasho/apps:/pibasho/apps
     environment:
       - VIRTUAL_HOST=*.local
       - VIRTUAL_PATH=/admin_backend/
@@ -27,6 +29,7 @@ services:
     volumes:
       - /pibasho/www/books:/app/www
       - /pibasho/nginx/apps/scrib:/app/nginx
+      - /pibasho/apps/scrib:/app/registration
     environment:
       - VIRTUAL_HOST=*.local
       - VIRTUAL_PATH=/scrib/
