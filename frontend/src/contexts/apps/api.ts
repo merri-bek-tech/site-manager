@@ -10,7 +10,9 @@ function getApiHost(path: string | undefined): string {
   return base_url + path
 }
 
-export type AppsResult = ErrorResult<string> | OkResult<string>
+export type AppsErrors = "no_docker"
+
+export type AppsResult = ErrorResult<AppsErrors> | OkResult<string>
 
 class PandaAppsApi {
   base_url: string
@@ -25,7 +27,7 @@ class PandaAppsApi {
       headers: defaultHeaders,
     })
       .then((response: Response) => response.json())
-      .then((json: any) => json as ErrorResult<string>)
+      .then((json: any) => json as ErrorResult<AppsErrors>)
   }
 }
 
