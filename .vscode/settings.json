@@ -18,6 +18,6 @@
   },
   "explorerExclude.backup": {},
   "rust-analyzer.cargo.sysroot": "discover",
-  "cSpell.words": ["Aquadoggo", "Liftoff"],
+  "cSpell.words": ["Aquadoggo", "Liftoff", "Scrib"],
   "ansible.python.interpreterPath": "/bin/python3"
 }
