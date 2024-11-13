@@ -1,6 +1,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
 import Layout from "./pages/Layout"
-import { ChakraProvider } from "@chakra-ui/react"
+import { Provider as ChakraProvider } from "./components/ui/provider"
 import { PandaNodeStatus } from "./contexts/panda_node"
 import { InstalledApps } from "./contexts/apps"
 

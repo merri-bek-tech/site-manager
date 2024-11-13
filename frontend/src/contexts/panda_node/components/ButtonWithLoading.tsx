@@ -1,17 +1,17 @@
 import { useState } from "react"
-import { Button } from "@chakra-ui/react"
+import { Button } from "../../../components/ui/button"
 
 type ButtonWithLoadingProps = {
   onClick: () => Promise<void>
   size?: "sm" | "md" | "lg"
-  colorScheme?: string
+  colorPalette?: string
   children: React.ReactNode
 }
 
 export default function ButtonWithLoading({
   onClick,
   size,
-  colorScheme,
+  colorPalette,
   children,
 }: ButtonWithLoadingProps) {
   const [loading, setLoading] = useState(false)
@@ -21,12 +21,15 @@ export default function ButtonWithLoading({
     onClick().finally(() => setLoading(false))
   }
 
+  console.log()
+
   return (
     <Button
       size={size}
-      colorScheme={colorScheme}
+      colorPalette={colorPalette}
       onClick={internalOnClick}
-      isLoading={loading}
+      loading={loading}
+      disabled={loading}
     >
       {children}
     </Button>

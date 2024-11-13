@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react"
 import PandaAppsApi, { AppsErrors, AppsResult } from "../api"
-import { Box, Heading, Spinner } from "@chakra-ui/react"
+import { Box, Heading } from "@chakra-ui/react"
 import { ApiError } from "../../shared"
 import AppList from "../components/AppList"
 
@@ -23,7 +23,7 @@ export default function InstalledApps() {
   let inner: React.ReactNode = null
 
   if (appsResult == null) {
-    inner = <Spinner />
+    inner = <div>xxx</div>
   } else if ("Err" in appsResult) {
     inner = (
       <ApiError

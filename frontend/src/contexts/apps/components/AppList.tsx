@@ -1,35 +1,24 @@
-import {
-  TableContainer,
-  Table,
-  Thead,
-  Tr,
-  Th,
-  Tbody,
-  Td,
-  Link,
-} from "@chakra-ui/react"
+import { Table, Link } from "@chakra-ui/react"
 
 export default function AppList() {
   return (
-    <TableContainer>
-      <Table variant="simple">
-        <Thead>
-          <Tr>
-            <Th>Name</Th>
-            <Th>Path</Th>
-            <Th>Version</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          <Tr>
-            <Td>Scrib</Td>
-            <Td>
-              <Link href="/books">/books</Link>
-            </Td>
-            <Td>0.1.11</Td>
-          </Tr>
-        </Tbody>
-      </Table>
-    </TableContainer>
+    <Table.Root variant="line">
+      <Table.Header>
+        <Table.Row>
+          <Table.ColumnHeader>Name</Table.ColumnHeader>
+          <Table.ColumnHeader>Path</Table.ColumnHeader>
+          <Table.ColumnHeader>Version</Table.ColumnHeader>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        <Table.Row>
+          <Table.Cell>Scrib</Table.Cell>
+          <Table.Cell>
+            <Link href="/books">/books</Link>
+          </Table.Cell>
+          <Table.Cell>0.1.11</Table.Cell>
+        </Table.Row>
+      </Table.Body>
+    </Table.Root>
   )
 }
