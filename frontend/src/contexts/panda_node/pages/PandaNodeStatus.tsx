@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import PandaNodeStatusDisplay from "../components/PandaNodeStatusDisplay"
 import PandaNodeApi from "../api"
 import { NodeStatus } from "../types"
 
 export default function PandaNodeStatus() {
-  const api = new PandaNodeApi()
+  const api = useMemo(() => new PandaNodeApi(), [])
   const [status, setStatus] = useState<NodeStatus>("Unknown")
 
   useEffect(() => {
@@ -14,7 +14,7 @@ export default function PandaNodeStatus() {
     })
 
     console.log("env", import.meta.env)
-  }, [])
+  }, [api])
 
   const control = {
     stop: () => api.stop().then(setStatus),

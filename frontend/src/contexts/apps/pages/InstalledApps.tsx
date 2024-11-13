@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import PandaAppsApi, { AppsErrors, AppsResult } from "../api"
 import { Box, Heading, Spinner } from "@chakra-ui/react"
 import { ApiError } from "../../shared"
@@ -9,15 +9,16 @@ const errorMessages: Record<AppsErrors, string> = {
 }
 
 export default function InstalledApps() {
-  const api = new PandaAppsApi()
   const [appsResult, setAppsResult] = useState<AppsResult | null>(null)
+
+  const api = useMemo(() => new PandaAppsApi(), [])
 
   useEffect(() => {
     api.listInstalledApps().then((result) => {
       console.log("got apps result", result)
       setAppsResult(result)
     })
-  }, [])
+  }, [api])
 
   let inner: React.ReactNode = null
 
@@ -32,7 +33,6 @@ export default function InstalledApps() {
       />
     )
   } else {
-    const apps = appsResult.Ok
     inner = <AppList />
   }
 
