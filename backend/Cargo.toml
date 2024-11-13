@@ -5,7 +5,7 @@ edition = "2021"
 publish = false
 
 [dependencies]
-aquadoggo = "0.7.1"
+aquadoggo = "0.8.0"
 p2panda-rs = "0.8.1"
 rocket_cors = "0.6.0"
 tokio-util = "0.7.10"
