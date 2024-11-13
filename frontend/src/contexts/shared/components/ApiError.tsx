@@ -1,10 +1,6 @@
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
-  Box,
-} from "@chakra-ui/react"
+import { AlertDescription, AlertTitle, Box } from "@chakra-ui/react"
+import { LuAlertCircle } from "react-icons/lu"
+import { Alert } from "../../../components/ui/alert"
 
 export default function ApiError({
   activity,
@@ -17,7 +13,7 @@ export default function ApiError({
 }) {
   return (
     <Alert status="error">
-      <AlertIcon />
+      <LuAlertCircle />
       <Box>
         <AlertTitle>Error {activity}</AlertTitle>
         <AlertDescription>

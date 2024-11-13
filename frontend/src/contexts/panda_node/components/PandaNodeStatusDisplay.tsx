@@ -5,7 +5,6 @@ import {
   Text,
   Link,
   Card,
-  CardBody,
   Badge,
   VStack,
   HStack,
@@ -14,13 +13,14 @@ import {
 import deepseaPanda from "../../../assets/deepsea-panda.svg"
 import { NodeStatus } from "../types"
 import ButtonWithLoading from "./ButtonWithLoading"
+import { LuExternalLink } from "react-icons/lu"
 
 export interface PandaNodeControl {
   stop: () => Promise<void>
   start: () => Promise<void>
 }
 
-function colorSchemeForState(state: NodeStatus): string {
+function colorPaletteForState(state: NodeStatus): string {
   switch (state) {
     case "Offline":
       return "red"
@@ -47,25 +47,28 @@ export default function PandaNodeStatusDisplay({
         </Stack>
       </Heading>
       <Text mt={2}>
-        <Link href="https://p2panda.org/" isExternal>
+        <Link href="https://p2panda.org/">
           P2Panda
+          <LuExternalLink />
         </Link>{" "}
         is the technology we use to send information between Pibashos at
         different locations
       </Text>
-      <Card mt={4}>
-        <CardBody>
+      <Card.Root mt={4}>
+        <Card.Body>
           <HStack>
             <Text>Node status</Text>
             <Box flexGrow={1}>
-              <Badge colorScheme={colorSchemeForState(status)}>{status}</Badge>
+              <Badge colorPalette={colorPaletteForState(status)}>
+                {status}
+              </Badge>
             </Box>
 
             <Box>
               {status === "Running" && (
                 <ButtonWithLoading
                   size="sm"
-                  colorScheme="orange"
+                  colorPalette="orange"
                   onClick={control.stop}
                 >
                   Stop
@@ -74,7 +77,7 @@ export default function PandaNodeStatusDisplay({
               {status === "Offline" && (
                 <ButtonWithLoading
                   size="sm"
-                  colorScheme="green"
+                  colorPalette="green"
                   onClick={control.start}
                 >
                   Start
@@ -82,8 +85,8 @@ export default function PandaNodeStatusDisplay({
               )}
             </Box>
           </HStack>
-        </CardBody>
-      </Card>
+        </Card.Body>
+      </Card.Root>
     </VStack>
   )
 }

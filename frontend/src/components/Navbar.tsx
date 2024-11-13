@@ -1,6 +1,6 @@
-import { Box, Flex, useColorModeValue, Stack, Button } from "@chakra-ui/react"
+import { Box, Flex, Stack, Button } from "@chakra-ui/react"
 import { Link } from "react-router-dom"
-import ColorModeSwitcher from "./ColorModeSwitcher"
+import { ColorModeButton, useColorModeValue } from "./ui/color-mode"
 
 export default function Navbar() {
   return (
@@ -11,12 +11,12 @@ export default function Navbar() {
             <Box>Pibasho</Box>
             <Box>
               <Link to="/node">
-                <Button colorScheme="blue" variant="ghost">
+                <Button colorPalette="blue" variant="ghost">
                   Panda Node
                 </Button>
               </Link>
               <Link to="/apps">
-                <Button colorScheme="blue" variant="ghost">
+                <Button colorPalette="blue" variant="ghost">
                   Apps
                 </Button>
               </Link>
@@ -24,8 +24,8 @@ export default function Navbar() {
           </Stack>
 
           <Flex alignItems={"center"}>
-            <Stack direction={"row"} spacing={7}>
-              <ColorModeSwitcher />
+            <Stack direction={"row"}>
+              <ColorModeButton />
             </Stack>
           </Flex>
         </Flex>
