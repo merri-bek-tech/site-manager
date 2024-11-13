@@ -1,8 +1,10 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
 import Layout from "./pages/Layout"
-import { Provider as ChakraProvider } from "./components/ui/provider"
+import { ChakraProvider } from "@chakra-ui/react"
+import { ColorModeProvider } from "./components/ui/color-mode"
 import { PandaNodeStatus } from "./contexts/panda_node"
 import { InstalledApps } from "./contexts/apps"
+import { themeSystem } from "./theme"
 
 const router = createBrowserRouter(
   [
@@ -23,8 +25,10 @@ const router = createBrowserRouter(
 
 function App() {
   return (
-    <ChakraProvider>
-      <RouterProvider router={router} />
+    <ChakraProvider value={themeSystem}>
+      <ColorModeProvider>
+        <RouterProvider router={router} />
+      </ColorModeProvider>
     </ChakraProvider>
   )
 }
