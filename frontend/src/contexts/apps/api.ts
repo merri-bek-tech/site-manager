@@ -1,4 +1,4 @@
-const defaultHeaders = {
+const headers = {
   "Content-Type": "application/json",
 }
 
@@ -8,25 +8,34 @@ function getApiHost(path: string | undefined): string {
   return base_url + path
 }
 
-export type AppsErrors = "no_docker"
+export type ApiResult = Error | Object
 
-export type AppsResult = Error | Object
-
-class PandaAppsApi {
+class Api {
   base_url: string
 
   constructor(base_url?: string) {
     this.base_url = base_url || getApiHost("/apps")
   }
 
-  listInstalledApps(): Promise<AppsResult> {
-    return fetch(`${this.base_url}/installed`, {
-      method: "GET",
-      headers: defaultHeaders,
+  listInstalledApps(): Promise<ApiResult> {
+    return this.apiCall('installed')
+  }
+
+  getSiteData(): Promise<ApiResult> {
+    return this.apiCall('this_site')
+  }
+
+  setSiteData(siteData): Promise<ApiResult> {
+    return this.apiCall('this_site/create', 'POST', siteData)
+  }
+
+  apiCall(path, method = 'GET', body = null) {
+    return fetch(`${this.base_url}/${path}`, {
+      method, headers, body
     })
       .then((response: Response) => response.json())
       .catch(error => error)
   }
 }
 
-export default PandaAppsApi
+export default Api

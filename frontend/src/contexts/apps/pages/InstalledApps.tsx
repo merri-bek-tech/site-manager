@@ -1,14 +1,14 @@
 import React, { useEffect, useMemo, useState } from "react"
-import PandaAppsApi, { AppsResult } from "../api"
+import Api, { ApiResult } from "../api"
 import { Box, Heading } from "@chakra-ui/react"
 import { ApiError } from "../../shared"
 import AppList from "../components/AppList"
 
 
 export default function InstalledApps() {
-  const [appsResult, setAppsResult] = useState<AppsResult | null>(null)
+  const [appsResult, setAppsResult] = useState<ApiResult | null>(null)
 
-  const api = useMemo(() => new PandaAppsApi(), [])
+  const api = useMemo(() => new Api(), [])
 
   useEffect(() => {
     api.listInstalledApps().then((result) => {
