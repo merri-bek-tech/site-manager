@@ -1,13 +1,15 @@
 use rocket_aquadoggo::aquadoggo_fairing::AquadoggoFairing;
 use rocket_aquadoggo::container::AquadoggoContainer;
 
-mod routes;
 mod infra;
 mod rocket_aquadoggo;
+mod routes;
 
-#[macro_use] extern crate rocket;
+#[macro_use]
+extern crate rocket;
 
-#[cfg(test)] mod tests;
+#[cfg(test)]
+mod tests;
 
 #[get("/")]
 fn hello() -> String {
@@ -23,5 +25,6 @@ async fn rocket() -> _ {
         .attach(AquadoggoFairing::default())
         .mount("/", routes![hello])
         .mount("/panda", routes::panda_node::routes())
+        .mount("/this_site", routes::this_site::routes())
         .mount("/apps", routes::apps::routes())
 }

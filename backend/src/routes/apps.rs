@@ -1,4 +1,3 @@
-use docker_sync::Docker;
 use rocket::serde::json::Json;
 use rocket::serde::{Deserialize, Serialize};
 use rocket::Route;
