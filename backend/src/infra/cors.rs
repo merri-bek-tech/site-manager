@@ -1,5 +1,5 @@
 use rocket::http::Method;
-use rocket_cors::{AllowedOrigins, CorsOptions};
+use rocket_cors::{AllowedHeaders, AllowedOrigins, CorsOptions};
 
 pub fn cors_fairing() -> rocket_cors::Cors {
     let cors = CorsOptions::default()
@@ -10,6 +10,11 @@ pub fn cors_fairing() -> rocket_cors::Cors {
                 .map(From::from)
                 .collect(),
         )
+        .allowed_headers(AllowedHeaders::some(&[
+            "Authorization",
+            "Accept",
+            "Content-type",
+        ]))
         .allow_credentials(true);
 
     cors.to_cors().unwrap()
