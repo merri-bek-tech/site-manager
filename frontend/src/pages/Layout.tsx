@@ -6,7 +6,7 @@ export default function Layout() {
   return (
     <Stack h="100vh" w="100vw">
       <Navbar />
-      <Container padding={4}>
+      <Container padding={4} centerContent>
         <Outlet />
       </Container>
     </Stack>

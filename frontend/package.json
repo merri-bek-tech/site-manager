@@ -28,6 +28,7 @@
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.4",
     "typescript": "^5.2.2",
+    "@chakra-ui/cli": "^3.2.3",
     "vite": "^6.0.0"
   }
 }

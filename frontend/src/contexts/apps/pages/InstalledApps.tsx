@@ -1,12 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react"
-import PandaAppsApi, { AppsErrors, AppsResult } from "../api"
+import PandaAppsApi, { AppsResult } from "../api"
 import { Box, Heading } from "@chakra-ui/react"
 import { ApiError } from "../../shared"
 import AppList from "../components/AppList"
 
-const errorMessages: Record<AppsErrors, string> = {
-  no_docker: "Docker is not running",
-}
 
 export default function InstalledApps() {
   const [appsResult, setAppsResult] = useState<AppsResult | null>(null)
@@ -15,7 +12,7 @@ export default function InstalledApps() {
 
   useEffect(() => {
     api.listInstalledApps().then((result) => {
-      console.log("got apps result", result)
+      console.log("got apps result", { result })
       setAppsResult(result)
     })
   }, [api])
@@ -24,12 +21,11 @@ export default function InstalledApps() {
 
   if (appsResult == null) {
     inner = <div>xxx</div>
-  } else if ("Err" in appsResult) {
+  } else if (appsResult instanceof Error) {
     inner = (
       <ApiError
         activity="fetching apps"
-        description={errorMessages[appsResult.Err]}
-        errorName={appsResult.Err}
+        description={appsResult.message}
       />
     )
   } else {

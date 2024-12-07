@@ -1,5 +1,3 @@
-import { ErrorResult, OkResult } from "../shared/types"
-
 const defaultHeaders = {
   "Content-Type": "application/json",
 }
@@ -12,7 +10,7 @@ function getApiHost(path: string | undefined): string {
 
 export type AppsErrors = "no_docker"
 
-export type AppsResult = ErrorResult<AppsErrors> | OkResult<string>
+export type AppsResult = Error | Object
 
 class PandaAppsApi {
   base_url: string
@@ -27,7 +25,7 @@ class PandaAppsApi {
       headers: defaultHeaders,
     })
       .then((response: Response) => response.json())
-      .then((json: any) => json as ErrorResult<AppsErrors>)
+      .catch(error => error)
   }
 }
 
