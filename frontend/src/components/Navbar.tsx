@@ -8,7 +8,9 @@ export default function Navbar() {
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
         <Flex alignItems={"center"} justifyContent={"space-between"}>
           <Stack direction="row" alignItems="center">
-            <Box>Pibasho</Box>
+            <Box>
+              <Link to="/">Pibasho</Link>
+            </Box>
             <Box>
               <Link to="/node">
                 <Button colorPalette="blue" variant="ghost">

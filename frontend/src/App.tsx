@@ -5,6 +5,7 @@ import { ColorModeProvider } from "./components/ui/color-mode"
 import { PandaNodeStatus } from "./contexts/panda_node"
 import { InstalledApps } from "./contexts/apps"
 import { themeSystem } from "./theme"
+import { ThisSite } from './contexts/this_site'
 
 const router = createBrowserRouter(
   [
@@ -12,7 +13,7 @@ const router = createBrowserRouter(
       path: "/",
       element: <Layout />,
       children: [
-        { path: "", element: <h1>Home</h1> },
+        { path: "", element: <ThisSite /> },
         { path: "node", element: <PandaNodeStatus /> },
         { path: "apps", element: <InstalledApps /> },
       ],

@@ -1,5 +1,3 @@
-import { AlertDescription, AlertTitle, Box } from "@chakra-ui/react"
-import { LuCircleAlert } from "react-icons/lu"
 import { Alert } from "../../../components/ui/alert"
 
 export default function ApiError({
@@ -9,17 +7,11 @@ export default function ApiError({
 }: {
   activity: string
   description: string | null
-  errorName: string
+  errorName?: string
 }) {
   return (
-    <Alert status="error">
-      <LuCircleAlert />
-      <Box>
-        <AlertTitle>Error {activity}</AlertTitle>
-        <AlertDescription>
-          {description || `Unknown error: ${errorName}`}
-        </AlertDescription>
-      </Box>
+    <Alert title={`Error ${activity}`} status="error">
+      {description || `Unknown error: ${errorName}`}
     </Alert>
   )
 }
