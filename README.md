@@ -20,4 +20,4 @@ Running the frontend us done with `npm run dev`
 
 ## Generating a release
 
-We use [Release it](https://github.com/release-it/release-it). To run it, use `npm run release`
+We use [Release it](https://github.com/release-it/release-it). For the first time, you'll need to install it with 'npm install' from the root directory of this project. After that, to run it, use `npm run release`
