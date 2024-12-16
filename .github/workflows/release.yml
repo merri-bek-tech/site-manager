@@ -33,7 +33,7 @@ jobs:
           context: ./frontend
           platforms: linux/amd64,linux/arm/v7
           push: true
-          tags: redbugcollective/pibasho-frontend:latest,redbugcollective/pibasho-frontend:${{ steps.parse_ref.outputs.tag }}
+          tags: merri-bek-tech/site-manager-frontend:latest,merri-bek-tech/site-manager-frontend:${{ steps.parse_ref.outputs.tag }}
 
       - name: Build and push backend
         uses: docker/build-push-action@v5
@@ -41,7 +41,7 @@ jobs:
           context: ./backend
           platforms: linux/amd64,linux/arm/v7
           push: true
-          tags: redbugcollective/pibasho-backend:latest,redbugcollective/pibasho-backend:${{ steps.parse_ref.outputs.tag }}
+          tags: merri-bek-tech/site-manager-backend:latest,merri-bek-tech/site-manager-backend:${{ steps.parse_ref.outputs.tag }}
 
   #     - name: Build and push combined
   #       uses: docker/build-push-action@v5
