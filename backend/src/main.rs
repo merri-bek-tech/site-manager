@@ -1,7 +1,6 @@
-use rocket::{
-    fs::{FileServer, Options},
-    response::Redirect,
-};
+use infra::spa_server::SpaServer;
+use rocket::fs::{FileServer, Options};
+use rocket::response::Redirect;
 
 mod infra;
 mod routes;
@@ -34,11 +33,7 @@ async fn rocket() -> _ {
         )
         .mount(
             "/admin",
-            FileServer::new(
-                "../frontend/dist/index.html",
-                Options::IndexFile | Options::Missing,
-            )
-            .rank(2),
+            SpaServer::new("../frontend/dist/index.html", Options::IndexFile),
         )
         .mount("/hello", routes![hello])
         .mount("/api/this_site", routes::this_site::routes())
