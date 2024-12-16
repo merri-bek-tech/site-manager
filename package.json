@@ -1,5 +1,5 @@
 {
-  "name": "site-manager-frontend",
+  "name": "site-manager",
   "private": true,
   "version": "0.1.0",
   "devDependencies": {
