@@ -12,11 +12,6 @@ export default function Navbar() {
               <Link to="/">Pibasho</Link>
             </Box>
             <Box>
-              <Link to="/node">
-                <Button colorPalette="blue" variant="ghost">
-                  Panda Node
-                </Button>
-              </Link>
               <Link to="/apps">
                 <Button colorPalette="blue" variant="ghost">
                   Apps

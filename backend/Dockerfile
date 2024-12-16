@@ -11,7 +11,7 @@ RUN ./platform.sh
 RUN rustup component add rustfmt
 CMD /bin/bash
 RUN rustup target add $(cat /app/.platform)
-RUN apt-get update && apt-get install -y unzip  $(cat /app/.compiler) pkg-config libssl-dev
+RUN apt-get update && apt-get install -y unzip $(cat /app/.compiler) pkg-config libssl-dev
 COPY deployment/cargo-config.toml ./.cargo/config
 
 # Compile the backend
