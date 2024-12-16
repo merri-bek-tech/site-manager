@@ -1,27 +1,24 @@
-import {
-  Flex,
-  Heading,
-  VStack,
-} from '@chakra-ui/react'
-import { useState } from 'react';
+import { Heading, VStack } from "@chakra-ui/react"
+import { useState } from "react"
 
-import { SiteDataForm } from '../components/SiteDataForm'
-
+import { SiteDataForm } from "../components/SiteDataForm"
+import { SiteData } from "../types"
 
 export default function () {
-
-  const [siteData, setSiteData] = useState({ name: '' })
+  const [siteData, setSiteData] = useState({ name: "" })
 
   if (siteData == null) {
-    return 'Checking site data...'
+    return "Checking site data..."
   }
 
-  function updateSite(site) {
+  function updateSite(site: SiteData) {
     console.log({ site })
   }
 
-  return <VStack gap={4}>
-    <Heading>Hello!</Heading>
-    <SiteDataForm siteData={siteData} updateSite={updateSite} />
-  </VStack>
+  return (
+    <VStack gap={4}>
+      <Heading>Hello!</Heading>
+      <SiteDataForm siteData={siteData} updateSite={updateSite} />
+    </VStack>
+  )
 }

@@ -1,5 +1,5 @@
 # FRONTEND BUILDER
-FROM --platform=$BUILDPLATFORM node:latest as vitebuilder
+FROM --platform=$BUILDPLATFORM node:22 as vitebuilder
 WORKDIR /app
 ADD . .
 RUN npm install && npm run build

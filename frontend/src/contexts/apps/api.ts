@@ -1,3 +1,5 @@
+import { SiteData } from "../this_site/types"
+
 const headers = {
   "Content-Type": "application/json",
 }
@@ -18,23 +20,25 @@ class Api {
   }
 
   listInstalledApps(): Promise<ApiResult> {
-    return this.apiCall('installed')
+    return this.apiCall("installed")
   }
 
   getSiteData(): Promise<ApiResult> {
-    return this.apiCall('this_site')
+    return this.apiCall("this_site")
   }
 
-  setSiteData(siteData): Promise<ApiResult> {
-    return this.apiCall('this_site/create', 'POST', siteData)
+  setSiteData(siteData: SiteData): Promise<ApiResult> {
+    return this.apiCall("this_site/create", "POST", siteData)
   }
 
-  apiCall(path, method = 'GET', body = null) {
+  apiCall(path: string, method = "GET", body?: any): Promise<ApiResult> {
     return fetch(`${this.base_url}/${path}`, {
-      method, headers, body
+      method,
+      headers,
+      body,
     })
       .then((response: Response) => response.json())
-      .catch(error => error)
+      .catch((error) => error)
   }
 }
 
