@@ -6,7 +6,7 @@ const headers = {
 
 //const default_host = "/admin_backend"
 function getApiHost(path: string | undefined): string {
-  const base_url: string = import.meta.env.VITE_API_HOST || "/admin_backend"
+  const base_url: string = import.meta.env.VITE_API_HOST || "/api"
   return base_url + path
 }
 

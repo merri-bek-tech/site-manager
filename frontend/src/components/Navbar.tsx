@@ -9,7 +9,7 @@ export default function Navbar() {
         <Flex alignItems={"center"} justifyContent={"space-between"}>
           <Stack direction="row" alignItems="center">
             <Box>
-              <Link to="/">Pibasho</Link>
+              <Link to="/">Site Manager</Link>
             </Box>
             <Box>
               <Link to="/apps">

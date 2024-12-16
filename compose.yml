@@ -1,5 +1,5 @@
 services:
-  pibasho-frontend:
+  site-manager-frontend:
     image: resilientlocaltech/site-manager-frontend
     ports:
       - "8100:80"
@@ -9,9 +9,9 @@ services:
     #   - /site-manager/nginx/apps:/etc/nginx/conf.d/apps
     environment:
       - VIRTUAL_HOST=*.local
-      - VIRTUAL_PATH=/admin/
-      - VITE_API_HOST=/admin_backend
-  pibasho-backend:
+      - VIRTUAL_PATH=/
+      - VITE_API_HOST=/api
+  site-manager-backend:
     image: resilientlocaltech/site-manager-backend
     ports:
       - "8102:8000"
@@ -19,6 +19,6 @@ services:
     #   - /site-manager/apps:/site-manager/apps
     environment:
       - VIRTUAL_HOST=*.local
-      - VIRTUAL_PATH=/admin_backend/
+      - VIRTUAL_PATH=/api
       - VIRTUAL_DEST=/
       - ROCKET_LOG_LEVEL=debug
