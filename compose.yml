@@ -1,36 +1,24 @@
 services:
   pibasho-frontend:
-    image: redbugcollective/pibasho-frontend
+    image: resilientlocaltech/site-manager-frontend
     ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - /pibasho/www:/usr/share/nginx/html/apps
-      - /pibasho/nginx/apps:/etc/nginx/conf.d/apps
+      - "8100:80"
+      - "8101:443"
+    # volumes:
+    #   - /site-manager/www:/usr/share/nginx/html/apps
+    #   - /site-manager/nginx/apps:/etc/nginx/conf.d/apps
     environment:
       - VIRTUAL_HOST=*.local
       - VIRTUAL_PATH=/admin/
       - VITE_API_HOST=/admin_backend
   pibasho-backend:
-    image: redbugcollective/pibasho-backend
-    expose:
-      - "8000"
-    volumes:
-      - /pibasho/apps:/pibasho/apps
+    image: resilientlocaltech/site-manager-backend
+    ports:
+      - "8102:8000"
+    # volumes:
+    #   - /site-manager/apps:/site-manager/apps
     environment:
       - VIRTUAL_HOST=*.local
       - VIRTUAL_PATH=/admin_backend/
       - VIRTUAL_DEST=/
       - ROCKET_LOG_LEVEL=debug
-  scrib:
-    image: redbugcollective/scrib
-    expose:
-      - "80"
-    volumes:
-      - /pibasho/www/books:/app/www
-      - /pibasho/nginx/apps/scrib:/app/nginx
-      - /pibasho/apps/scrib:/app/registration
-    environment:
-      - VIRTUAL_HOST=*.local
-      - VIRTUAL_PATH=/scrib/
-      - VIRTUAL_DEST=/

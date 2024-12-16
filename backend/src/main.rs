@@ -1,3 +1,5 @@
+use rocket::fs::FileServer;
+
 mod infra;
 mod routes;
 
@@ -17,6 +19,7 @@ fn hello() -> String {
 async fn rocket() -> _ {
     rocket::build()
         .attach(infra::cors::cors_fairing())
+        .mount("/assets", FileServer::from("/home/jade/assets"))
         .mount("/", routes![hello])
         .mount("/this_site", routes::this_site::routes())
         .mount("/apps", routes::apps::routes())
