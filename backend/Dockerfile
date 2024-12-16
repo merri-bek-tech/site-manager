@@ -11,17 +11,17 @@ RUN ./platform.sh
 RUN rustup component add rustfmt
 CMD /bin/bash
 RUN rustup target add $(cat /app/.platform)
-RUN apt-get update && apt-get install -y unzip $(cat /app/.compiler)
+RUN apt-get update && apt-get install -y unzip  $(cat /app/.compiler) pkg-config libssl-dev
 COPY deployment/cargo-config.toml ./.cargo/config
 
 # Compile the backend
 ADD . .
 RUN RUSTFLAGS=-g cargo build --release --target $(cat /app/.platform)
-RUN cp /app/target/$(cat /app/.platform)/release/pibasho-backend /app/pibasho-backend
+RUN cp /app/target/$(cat /app/.platform)/release/site-manager /app/site-manager
 
 # RUNNER
 FROM ubuntu as runner
-COPY --from=rustbuilder /app/pibasho-backend /usr/local/bin/pibasho-backend
+COPY --from=rustbuilder /app/site-manager /usr/local/bin/site-manager
 ENV ROCKET_ADDRESS=0.0.0.0
 EXPOSE 8000
-CMD ["pibasho-backend"]
+CMD ["site-manager"]

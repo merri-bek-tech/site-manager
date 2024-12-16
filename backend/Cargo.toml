@@ -1,5 +1,5 @@
 [package]
-name = "pibasho-backend"
+name = "site-manager"
 version = "0.1.4"
 edition = "2021"
 publish = false
