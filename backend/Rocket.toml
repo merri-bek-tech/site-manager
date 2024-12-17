@@ -1,0 +1,5 @@
+[default]
+frontend_asset_path = ""
+
+[release]
+frontend_asset_path = "../frontend/dist"
