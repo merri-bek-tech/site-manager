@@ -30,7 +30,7 @@ FROM ubuntu AS runner
 COPY --from=rustbuilder /app/site-manager /app/backend/site-manager
 COPY --from=vitebuilder /app/dist /app/frontend
 ENV ROCKET_ADDRESS=0.0.0.0
-ENV ROCKET_PORT=8000
+ENV ROCKET_PORT=80
 ENV ROCKET_FRONTEND_ASSET_PATH=/app/frontend
 EXPOSE 8000
 WORKDIR /app/backend
