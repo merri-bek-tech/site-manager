@@ -1,24 +1,5 @@
 services:
-  site-manager-frontend:
-    image: resilientlocaltech/site-manager-frontend
+  site-manager:
+    image: resilientlocaltech/site-manager
     ports:
       - "8100:80"
-      - "8101:443"
-    # volumes:
-    #   - /site-manager/www:/usr/share/nginx/html/apps
-    #   - /site-manager/nginx/apps:/etc/nginx/conf.d/apps
-    environment:
-      - VIRTUAL_HOST=*.local
-      - VIRTUAL_PATH=/
-      - VITE_API_HOST=/api
-  site-manager-backend:
-    image: resilientlocaltech/site-manager-backend
-    ports:
-      - "8102:8000"
-    # volumes:
-    #   - /site-manager/apps:/site-manager/apps
-    environment:
-      - VIRTUAL_HOST=*.local
-      - VIRTUAL_PATH=/api
-      - VIRTUAL_DEST=/
-      - ROCKET_LOG_LEVEL=debug
