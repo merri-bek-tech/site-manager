@@ -16,6 +16,8 @@ p2panda-core = "0.1.0"
 gethostname = "0.5.0"
 p2panda-discovery = "0.1.0"
 anyhow = "1.0.94"
+rand = "0.8.5"
+ciborium = "0.2.2"
 
 [dependencies.rocket]
 version = "0.5.1"
