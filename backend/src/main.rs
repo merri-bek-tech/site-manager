@@ -1,9 +1,12 @@
 use infra::spa_server::SpaServer;
+use panda_comms::container::P2PandaContainer;
+use panda_comms::fairing::P2PandaCommsFairing;
 use rocket::fs::{FileServer, Options};
 use rocket::response::Redirect;
 use rocket::serde::Deserialize;
 
 mod infra;
+mod panda_comms;
 mod routes;
 
 #[macro_use]
@@ -37,8 +40,13 @@ async fn rocket() -> _ {
     // log the config
     println!("Config static_asset_path: {:?}", config.frontend_asset_path);
 
+    // state
+    rocket = rocket.manage(P2PandaContainer::default());
+
     // fairings
-    rocket = rocket.attach(infra::cors::cors_fairing());
+    rocket = rocket
+        .attach(infra::cors::cors_fairing())
+        .attach(P2PandaCommsFairing::default());
 
     // frontend
     if !config.frontend_asset_path.is_empty() {

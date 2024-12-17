@@ -9,6 +9,13 @@ rocket_cors = "0.6.0"
 tokio-util = "0.7.10"
 env_logger = "0.11.2"
 log = "0.4.20"
+p2panda-sync = "0.1.0"
+p2panda-net = "0.1.0"
+serde = "1.0.216"
+p2panda-core = "0.1.0"
+gethostname = "0.5.0"
+p2panda-discovery = "0.1.0"
+anyhow = "1.0.94"
 
 [dependencies.rocket]
 version = "0.5.1"
