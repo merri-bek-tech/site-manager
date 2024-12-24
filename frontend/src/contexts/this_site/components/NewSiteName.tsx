@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form"
 
 import { Field } from "../../../components/ui/field"
 import { Button } from "../../../components/ui/button"
-import { SiteData } from "../types"
+import { SiteDetails } from "../types"
 
 type SetSiteNameFunc = (name: string) => void
 

@@ -2,29 +2,29 @@ import { Container } from "@chakra-ui/react"
 import { useState } from "react"
 
 import NewSiteName from "../components/NewSiteName"
-import { SiteData } from "../types"
+import { SiteDetails } from "../types"
 import FindBioregion from "../components/FindBioregion"
 
 type SiteStep = "set_name" | "find_bioregion"
 
-function getStep(siteData: SiteData): SiteStep {
-  if (!siteData.name) {
+function getStep(siteDetails: SiteDetails): SiteStep {
+  if (!siteDetails.name) {
     return "set_name"
   }
   return "find_bioregion"
 }
 
 export default function () {
-  const [siteData, setSiteData] = useState({ name: "" })
-  function updateSite(site: SiteData) {
+  const [siteDetails, setSiteDetails] = useState({ name: "" })
+  function updateSite(site: SiteDetails) {
     console.log(site)
-    setSiteData(site)
+    setSiteDetails(site)
   }
 
   const setSiteName = (name: string) =>
-    updateSite({ ...siteData, ...{ name: name } })
+    updateSite({ ...siteDetails, ...{ name: name } })
 
-  const step: SiteStep = getStep(siteData)
+  const step: SiteStep = getStep(siteDetails)
 
   return (
     <Container maxWidth={"2xl"}>

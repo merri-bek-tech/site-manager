@@ -1,4 +1,4 @@
-import { SiteData } from "../this_site/types"
+import { SiteDetails } from "../this_site/types"
 
 const headers = {
   "Content-Type": "application/json",
@@ -23,12 +23,12 @@ class Api {
     return this.apiCall("installed")
   }
 
-  getSiteData(): Promise<ApiResult> {
+  getSiteDetails(): Promise<ApiResult> {
     return this.apiCall("this_site")
   }
 
-  setSiteData(siteData: SiteData): Promise<ApiResult> {
-    return this.apiCall("this_site/create", "POST", siteData)
+  setSiteDetails(siteDetails: SiteDetails): Promise<ApiResult> {
+    return this.apiCall("this_site/create", "POST", siteDetails)
   }
 
   apiCall(path: string, method = "GET", body?: any): Promise<ApiResult> {

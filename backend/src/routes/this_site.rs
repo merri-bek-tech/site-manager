@@ -11,12 +11,12 @@ struct Site {
 
 #[derive(Deserialize)]
 #[serde(crate = "rocket::serde")]
-struct CreateSiteData {
+struct CreateSiteDetails {
     slug: String,
 }
 
 #[post("/create", data = "<data>")]
-async fn create(data: Json<CreateSiteData>) -> Json<Site> {
+async fn create(data: Json<CreateSiteDetails>) -> Json<Site> {
     Json(Site {
         slug: data.slug.clone(),
     })
