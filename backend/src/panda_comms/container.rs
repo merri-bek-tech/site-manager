@@ -1,15 +1,15 @@
 use anyhow::Result;
 use gethostname::gethostname;
-use p2panda_core::Hash;
+use p2panda_core::{Hash, PrivateKey};
 use p2panda_discovery::mdns::LocalDiscovery;
-use p2panda_net::{FromNetwork, Network, NetworkBuilder, NetworkId, TopicId};
+use p2panda_net::{FromNetwork, Network, NetworkBuilder, NetworkId, ToNetwork, TopicId};
 use p2panda_sync::TopicQuery;
 use rocket::tokio;
 use serde::{Deserialize, Serialize};
 use std::sync::{Arc, Mutex};
 
 use crate::panda_comms::messages::Message;
-use crate::panda_comms::site_messages::SiteMessages;
+use crate::panda_comms::site_messages::{SiteMessages, SiteRegistration};
 use crate::panda_comms::sites::Sites;
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash, Deserialize, Serialize)]
@@ -48,20 +48,22 @@ impl P2PandaContainer {
 
         let topic = ChatTopic::new("site_management");
 
-        // let private_key = PrivateKey::new();
+        let private_key = PrivateKey::new();
 
         let network: Network<ChatTopic> = NetworkBuilder::new(network_id)
             .discovery(LocalDiscovery::new()?)
             .build()
             .await?;
 
-        let (tx, mut rx, ready) = network.subscribe(topic).await?;
+        let (tx, mut rx, _ready) = network.subscribe(topic).await?;
 
         tokio::task::spawn(async move {
             while let Some(event) = rx.recv().await {
                 handle_gossip_event(event, &mut sites);
             }
         });
+
+        announce_site(&private_key, &site_name, &tx).await?;
 
         // put the network in the container
         let mut network_lock = self.network.lock().unwrap();
@@ -100,4 +102,22 @@ fn handle_message(message: Message<SiteMessages>, sites: &mut Sites) {
             println!("Received SiteNotification: {:?}", notification);
         }
     }
+}
+
+async fn announce_site(
+    private_key: &PrivateKey,
+    name: &str,
+    tx: &tokio::sync::mpsc::Sender<ToNetwork>,
+) -> Result<()> {
+    println!("Announcing myself: {}", name);
+    tx.send(ToNetwork::Message {
+        bytes: Message::sign_and_encode(
+            private_key,
+            SiteMessages::SiteRegistration(SiteRegistration {
+                name: name.to_string(),
+            }),
+        )?,
+    })
+    .await?;
+    Ok(())
 }

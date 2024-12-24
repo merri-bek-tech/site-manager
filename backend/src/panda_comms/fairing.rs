@@ -11,7 +11,7 @@ impl Fairing for P2PandaCommsFairing {
     fn info(&self) -> Info {
         Info {
             name: "P2PandaCommsFairing",
-            kind: Kind::Liftoff | Kind::Shutdown | Kind::Singleton,
+            kind: Kind::Liftoff | Kind::Singleton,
         }
     }
 
@@ -24,6 +24,4 @@ impl Fairing for P2PandaCommsFairing {
             println!("P2PandaContainer state not found.");
         }
     }
-
-    async fn on_shutdown(&self, _rocket: &Rocket<Orbit>) {}
 }
