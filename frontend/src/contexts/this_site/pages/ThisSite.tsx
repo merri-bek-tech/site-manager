@@ -3,6 +3,16 @@ import { useState } from "react"
 
 import NewSiteName from "../components/NewSiteName"
 import { SiteData } from "../types"
+import FindBioregion from "../components/FindBioregion"
+
+type SiteStep = "set_name" | "find_bioregion"
+
+function getStep(siteData: SiteData): SiteStep {
+  if (!siteData.name) {
+    return "set_name"
+  }
+  return "find_bioregion"
+}
 
 export default function () {
   const [siteData, setSiteData] = useState({ name: "" })
@@ -14,9 +24,12 @@ export default function () {
   const setSiteName = (name: string) =>
     updateSite({ ...siteData, ...{ name: name } })
 
+  const step: SiteStep = getStep(siteData)
+
   return (
     <Container maxWidth={"2xl"}>
-      <NewSiteName setSiteName={setSiteName} />
+      {step == "set_name" && <NewSiteName setSiteName={setSiteName} />}
+      {step == "find_bioregion" && <FindBioregion />}
     </Container>
   )
 }

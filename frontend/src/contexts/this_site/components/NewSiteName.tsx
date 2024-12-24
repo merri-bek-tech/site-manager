@@ -63,7 +63,7 @@ export default function NewSiteName({
 
           <Flex mt={2} justify="flex-end" width="100%">
             <Button loading={isSubmitting} type="submit">
-              Save
+              Set Name
             </Button>
           </Flex>
         </VStack>
