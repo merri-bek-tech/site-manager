@@ -6,18 +6,17 @@ import { SiteData } from "../types"
 
 export default function () {
   const [siteData, setSiteData] = useState({ name: "" })
-
-  if (siteData == null) {
-    return "Checking site data..."
-  }
-
   function updateSite(site: SiteData) {
-    console.log({ site })
+    console.log(site)
+    setSiteData(site)
   }
+
+  const setSiteName = (name: string) =>
+    updateSite({ ...siteData, ...{ name: name } })
 
   return (
     <Container maxWidth={"2xl"}>
-      <NewSiteName siteData={siteData} updateSite={updateSite} />
+      <NewSiteName setSiteName={setSiteName} />
     </Container>
   )
 }

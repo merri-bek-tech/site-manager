@@ -2,46 +2,28 @@ import { Flex, Text, Input, VStack } from "@chakra-ui/react"
 import { useForm, SubmitHandler } from "react-hook-form"
 
 import { Field } from "../../../components/ui/field"
-import { SiteData } from "../types"
 import { Button } from "../../../components/ui/button"
+import { SiteData } from "../types"
 
-type UpdateSiteFunc = (siteData: SiteData) => void
+type SetSiteNameFunc = (name: string) => void
 
 interface NewSiteNameData {
   name: string
 }
 
 export default function NewSiteName({
-  siteData,
-  updateSite,
+  setSiteName,
 }: {
-  siteData: SiteData
-  updateSite: UpdateSiteFunc
+  setSiteName: SetSiteNameFunc
 }) {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<NewSiteNameData>()
-  const onSubmit: SubmitHandler<NewSiteNameData> = (data) => console.log(data)
-
-  // const { name } = siteData
-
-  // const [newName, setNewName] = useState("")
-  // const [saved, setSaved] = useState(false)
-
-  // useEffect(() => {
-  //   setNewName(name)
-  // }, [siteData])
-
-  // function updateName(event: React.ChangeEvent<HTMLInputElement>) {
-  //   setNewName(event.target.value)
-  // }
-
-  // function saveNewName() {
-  //   updateSite({ name: newName })
-  //   setSaved(true)
-  // }
+  const onSubmit: SubmitHandler<NewSiteNameData> = (data) => {
+    setSiteName(data.name)
+  }
 
   return (
     <VStack alignItems={"stretch"} width="100%">
@@ -67,7 +49,14 @@ export default function NewSiteName({
             <Input
               {...register("name", {
                 required: "This is required",
-                minLength: { value: 4, message: "Minimum length should be 4" },
+                maxLength: {
+                  value: 50,
+                  message: "Must be less than 50 characters",
+                },
+                pattern: {
+                  value: /^[a-z]*$/,
+                  message: "Lowercase letters only",
+                },
               })}
             />
           </Field>
