@@ -1,7 +1,7 @@
-import { Heading, VStack } from "@chakra-ui/react"
+import { Container } from "@chakra-ui/react"
 import { useState } from "react"
 
-import { SiteDataForm } from "../components/SiteDataForm"
+import NewSiteName from "../components/NewSiteName"
 import { SiteData } from "../types"
 
 export default function () {
@@ -16,9 +16,8 @@ export default function () {
   }
 
   return (
-    <VStack gap={4}>
-      <Heading>Hello!</Heading>
-      <SiteDataForm siteData={siteData} updateSite={updateSite} />
-    </VStack>
+    <Container maxWidth={"2xl"}>
+      <NewSiteName siteData={siteData} updateSite={updateSite} />
+    </Container>
   )
 }
