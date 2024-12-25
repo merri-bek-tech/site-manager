@@ -15,6 +15,12 @@ extern crate rocket;
 #[cfg(test)]
 mod tests;
 
+use rocket_db_pools::{sqlx, Database};
+
+#[derive(Database)]
+#[database("main_db")]
+struct Logs(sqlx::SqlitePool);
+
 #[get("/")]
 fn hello() -> String {
     "OK".to_string()
@@ -46,6 +52,7 @@ async fn rocket() -> _ {
     // fairings
     rocket = rocket
         .attach(infra::cors::cors_fairing())
+        .attach(Logs::init())
         .attach(P2PandaCommsFairing::default());
 
     // frontend

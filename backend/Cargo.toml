@@ -18,6 +18,7 @@ p2panda-discovery = "0.1.0"
 anyhow = "1.0.94"
 rand = "0.8.5"
 ciborium = "0.2.2"
+rocket_db_pools = { version = "0.2.0", features = ["sqlx_sqlite"] }
 
 [dependencies.rocket]
 version = "0.5.1"
