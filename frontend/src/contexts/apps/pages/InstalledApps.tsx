@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react"
-import Api, { ApiResult } from "../api"
+import Api from "../api"
 import { Box, Heading } from "@chakra-ui/react"
 import { ApiError } from "../../shared"
 import AppList from "../components/AppList"
-
+import { ApiResult } from "../../shared/types"
 
 export default function InstalledApps() {
   const [appsResult, setAppsResult] = useState<ApiResult | null>(null)
@@ -23,10 +23,7 @@ export default function InstalledApps() {
     inner = <div>xxx</div>
   } else if (appsResult instanceof Error) {
     inner = (
-      <ApiError
-        activity="fetching apps"
-        description={appsResult.message}
-      />
+      <ApiError activity="fetching apps" description={appsResult.message} />
     )
   } else {
     inner = <AppList />

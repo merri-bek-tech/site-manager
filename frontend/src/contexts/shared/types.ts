@@ -5,3 +5,5 @@ export interface ErrorResult<T> {
 export interface OkResult<T> {
   Ok: T
 }
+
+export type ApiResult = Error | Object
