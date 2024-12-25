@@ -1,9 +1,9 @@
 import { VStack, Text } from "@chakra-ui/react"
 
-export default function FindBioregion() {
+export default function FindRegion() {
   return (
     <VStack alignItems={"stretch"} width="100%">
-      <Text>Now it's time to find your Bioregion.</Text>
+      <Text>Now it's time to find your Region.</Text>
     </VStack>
   )
 }

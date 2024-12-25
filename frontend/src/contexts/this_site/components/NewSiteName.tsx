@@ -33,7 +33,7 @@ export default function NewSiteName({
         </Text>
         <Text>To get setup, you'll need to choose a site name.</Text>
         <Text>
-          Ideally this should be unique within your Bioregion, but don't worry,
+          Ideally this should be unique within your region, but don't worry,
           you'll have a chance to change it later.
         </Text>
       </VStack>
