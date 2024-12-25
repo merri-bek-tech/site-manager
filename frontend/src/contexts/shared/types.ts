@@ -6,4 +6,4 @@ export interface OkResult<T> {
   Ok: T
 }
 
-export type ApiResult = Error | Object
+export type ApiResult<T, U> = OkResult<T> | ErrorResult<U>

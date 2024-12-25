@@ -1,29 +1,39 @@
-import { ApiResult } from "./types"
+import { ApiResult, OkResult } from "./types"
 
 const headers = {
   "Content-Type": "application/json",
 }
 
-//const default_host = "/admin_backend"
-function getApiHost(path: string | undefined): string {
-  const base_url: string = import.meta.env.VITE_API_HOST || "/api"
-  return base_url + path
+function getApiHost(): string {
+  return import.meta.env.VITE_API_HOST || "/api"
 }
 
 export default class BaseApi {
   base_url: string
 
-  constructor(base_url?: string) {
-    this.base_url = base_url || getApiHost("/apps")
+  constructor() {
+    this.base_url = getApiHost()
   }
 
-  apiCall(path: string, method = "GET", body?: any): Promise<ApiResult> {
-    return fetch(`${this.base_url}/${path}`, {
-      method,
-      headers,
-      body,
-    })
-      .then((response: Response) => response.json())
-      .catch((error) => error)
+  async apiCall(
+    path: string,
+    method: string = "GET",
+    body?: any,
+  ): Promise<ApiResult<any, any>> {
+    try {
+      const response = await fetch(`${this.base_url}/${path}`, {
+        method,
+        headers,
+        body,
+      })
+      return {
+        Ok: response.json(),
+      }
+    } catch (error) {
+      console.error("Failed to connect to API: ", error)
+      return {
+        Err: error,
+      }
+    }
   }
 }

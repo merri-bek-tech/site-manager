@@ -3,6 +3,6 @@ import { ApiResult } from "../shared/types"
 
 export default class AppsApi extends BaseApi {
   listInstalledApps(): Promise<ApiResult> {
-    return this.apiCall("installed")
+    return this.apiCall("apps/installed")
   }
 }

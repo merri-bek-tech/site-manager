@@ -6,26 +6,26 @@ use rocket::Route;
 #[derive(Serialize, Deserialize)]
 #[serde(crate = "rocket::serde")]
 struct Site {
-    slug: String,
+    name: String,
 }
 
 #[derive(Deserialize)]
 #[serde(crate = "rocket::serde")]
 struct CreateSiteDetails {
-    slug: String,
+    name: String,
 }
 
 #[post("/create", data = "<data>")]
 async fn create(data: Json<CreateSiteDetails>) -> Json<Site> {
     Json(Site {
-        slug: data.slug.clone(),
+        name: data.name.clone(),
     })
 }
 
 #[get("/", format = "json")]
 async fn show() -> Json<Site> {
     Json(Site {
-        slug: "slug".to_string(),
+        name: "foobar".to_string(),
     })
 }
 

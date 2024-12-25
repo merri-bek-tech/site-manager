@@ -4,6 +4,8 @@ import { useState } from "react"
 import NewSiteName from "../components/NewSiteName"
 import { SiteDetails } from "../types"
 import FindBioregion from "../components/FindRegion"
+import ThisSiteApi from "../api"
+import { ApiResult } from "../../shared/types"
 
 type SiteStep = "set_name" | "find_bioregion"
 
@@ -14,6 +16,8 @@ function getStep(siteDetails: SiteDetails | null): SiteStep {
   return "find_bioregion"
 }
 
+const api = new ThisSiteApi()
+
 export default function () {
   const [siteDetails, setSiteDetails] = useState<SiteDetails | null>(null)
   function updateSite(site: SiteDetails) {
@@ -21,8 +25,11 @@ export default function () {
     setSiteDetails(site)
   }
 
-  const setSiteName = (name: string) =>
-    updateSite({ ...siteDetails, ...{ name: name, uuid: "1" } })
+  const setSiteName = (name: string) => {
+    api.createSite(name).then((result: ApiResult<SiteDetails, any>) => {
+      if ("Ok" in result) updateSite(result.Ok)
+    })
+  }
 
   const step: SiteStep = getStep(siteDetails)
 
