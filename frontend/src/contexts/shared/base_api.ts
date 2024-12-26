@@ -2,6 +2,7 @@ import { ApiResult, OkResult } from "./types"
 
 const headers = {
   "Content-Type": "application/json",
+  Accept: "application/json",
 }
 
 function getApiHost(): string {
@@ -18,13 +19,13 @@ export default class BaseApi {
   async apiCall(
     path: string,
     method: string = "GET",
-    body?: any,
+    body?: object,
   ): Promise<ApiResult<any, any>> {
     try {
       const response = await fetch(`${this.base_url}/${path}`, {
         method,
         headers,
-        body,
+        body: (body && JSON.stringify(body)) || undefined,
       })
       return {
         Ok: response.json(),

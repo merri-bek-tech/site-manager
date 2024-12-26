@@ -1,6 +1,6 @@
 use rocket::post;
 use rocket::serde::json::Json;
-use rocket::serde::{Deserialize, Serialize};
+use rocket::serde::Deserialize;
 use rocket::Route;
 use rocket_db_pools::Connection;
 
@@ -21,7 +21,7 @@ async fn create(db: Connection<MainDb>, data: Json<CreateSiteDetails>) -> Json<S
     //     .await
     //     .ok();
     let repo = ThisSiteRepo::init();
-    let site = repo.create_site(db, data.name.clone()).await.unwrap();
+    let _result = repo.create_site(db, data.name.clone()).await.unwrap();
 
     Json(Site {
         id: "1".to_string(),
