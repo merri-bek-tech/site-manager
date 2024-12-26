@@ -26,9 +26,9 @@ impl ThisSiteRepo {
         ThisSiteRepo {}
     }
 
-    pub async fn get_site(&self, mut db: Connection<MainDb>) -> Result<Site, sqlx::Error> {
+    pub async fn get_site(&self, db: &mut Connection<MainDb>) -> Result<Site, sqlx::Error> {
         let site = sqlx::query_as!(Site, "SELECT sites.id as id, sites.name as name FROM sites INNER JOIN site_configs ON site_configs.this_site_id = sites.id LIMIT 1")
-            .fetch_one(&mut **db)
+            .fetch_one(&mut ***db)
             .await?;
 
         return Ok(site);
@@ -36,12 +36,10 @@ impl ThisSiteRepo {
 
     pub async fn create_site(
         &self,
-        mut db: Connection<MainDb>,
+        db: &mut Connection<MainDb>,
         name: String,
     ) -> Result<(), ThisSiteError> {
-        let existing = sqlx::query_as!(Site, "SELECT sites.id as id, sites.name as name FROM sites INNER JOIN site_configs ON site_configs.this_site_id = sites.id LIMIT 1")
-            .fetch_one(&mut **db)
-            .await;
+        let existing = self.get_site(db).await;
 
         if existing.is_ok() {
             println!("Site already exists");
@@ -52,7 +50,7 @@ impl ThisSiteRepo {
         println!("Creating site");
 
         let _site = sqlx::query!("INSERT INTO sites (id, name) VALUES (?, ?)", "1", name)
-            .execute(&mut **db)
+            .execute(&mut ***db)
             .await
             .map_err(|e| ThisSiteError::DbError(e))?;
 
