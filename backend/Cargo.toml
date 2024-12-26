@@ -22,6 +22,7 @@ rocket_db_pools = { version = "0.2.0", features = ["sqlx_sqlite"] }
 sqlx = { version = "0.7.4", features = ["macros", "migrate"] }
 dotenvy = "0.15.7"
 thiserror = "2.0.9"
+uuid = { version = "1.11.0", features = ["v4"] }
 
 [dependencies.rocket]
 version = "0.5.1"

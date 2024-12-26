@@ -1,6 +1,6 @@
 {
   "editor.formatOnSave": true,
-  "html.format.wrapLineLength": 120,
+  "html.format.wrapLineLength": 140,
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
@@ -19,5 +19,6 @@
   "explorerExclude.backup": {},
   "rust-analyzer.cargo.sysroot": "discover",
   "cSpell.words": ["Aquadoggo", "Liftoff", "Scrib"],
-  "ansible.python.interpreterPath": "/bin/python3"
+  "ansible.python.interpreterPath": "/bin/python3",
+  "editor.wordWrapColumn": 140
 }
