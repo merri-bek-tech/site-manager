@@ -6,7 +6,7 @@ use rocket_db_pools::Connection;
 
 use crate::infra::db::MainDb;
 use crate::repos::entities::Site;
-use crate::repos::this_site::ThisSiteRepo;
+use crate::repos::this_site::{ThisSiteError, ThisSiteRepo};
 
 #[derive(Deserialize)]
 #[serde(crate = "rocket::serde")]
@@ -15,22 +15,21 @@ struct CreateSiteDetails {
 }
 
 #[post("/create", data = "<data>")]
-async fn create(mut db: Connection<MainDb>, data: Json<CreateSiteDetails>) -> Json<Site> {
+async fn create(mut db: Connection<MainDb>, data: Json<CreateSiteDetails>) -> Result<Json<Site>, ThisSiteError> {
     let repo = ThisSiteRepo::init();
-    let _result = repo.create_site(&mut db, data.name.clone()).await.unwrap();
 
-    Json(Site {
-        id: "1".to_string(),
-        name: "foobar".to_string(),
-    })
+    repo.create_site(&mut db, data.name.clone())
+        .await
+        .map(|site| Json(site))
 }
 
 #[get("/", format = "json")]
-async fn show(mut db: Connection<MainDb>) -> Json<Site> {
+async fn show(mut db: Connection<MainDb>) -> Result<Json<Site>, ThisSiteError> {
     let repo = ThisSiteRepo::init();
-    let site = repo.get_site(&mut db).await.unwrap();
 
-    Json(site)
+    repo.get_site(&mut db)
+        .await
+        .map(|site| Json(site))
 }
 
 pub fn routes() -> Vec<Route> {
