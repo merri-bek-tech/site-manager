@@ -2,6 +2,9 @@ use rocket::post;
 use rocket::serde::json::Json;
 use rocket::serde::{Deserialize, Serialize};
 use rocket::Route;
+use rocket_db_pools::Connection;
+
+use crate::infra::db::MainDb;
 
 #[derive(Serialize, Deserialize)]
 #[serde(crate = "rocket::serde")]
@@ -16,7 +19,12 @@ struct CreateSiteDetails {
 }
 
 #[post("/create", data = "<data>")]
-async fn create(data: Json<CreateSiteDetails>) -> Json<Site> {
+async fn create(mut db: Connection<MainDb>, data: Json<CreateSiteDetails>) -> Json<Site> {
+    sqlx::query!("SELECT * FROM site_configs WHERE id = 0")
+        .fetch_one(&mut **db)
+        .await
+        .ok();
+
     Json(Site {
         name: data.name.clone(),
     })

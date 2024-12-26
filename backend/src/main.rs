@@ -1,7 +1,8 @@
+use infra::db::{run_migrations, MainDb};
 use infra::spa_server::SpaServer;
 use panda_comms::container::P2PandaContainer;
 use panda_comms::fairing::P2PandaCommsFairing;
-use rocket::fairing::{self, AdHoc};
+use rocket::fairing::AdHoc;
 use rocket::fs::{FileServer, Options};
 use rocket::response::Redirect;
 use rocket::serde::Deserialize;
@@ -16,12 +17,7 @@ extern crate rocket;
 #[cfg(test)]
 mod tests;
 
-use rocket::{Build, Rocket};
-use rocket_db_pools::{sqlx, Database};
-
-#[derive(Database)]
-#[database("main_db")]
-struct MainDb(sqlx::SqlitePool);
+use rocket_db_pools::Database;
 
 #[get("/")]
 fn hello() -> String {
@@ -80,20 +76,4 @@ async fn rocket() -> _ {
         .mount("/hello", routes![hello])
         .mount("/api/this_site", routes::this_site::routes())
         .mount("/api/apps", routes::apps::routes())
-}
-
-async fn run_migrations(rocket: Rocket<Build>) -> fairing::Result {
-    if let Some(db) = MainDb::fetch(&rocket) {
-        println!("Running DB migrations");
-
-        // run migrations using `db`. get the inner type with &db.0.
-        sqlx::migrate!("./migrations")
-            .run(&db.0)
-            .await
-            .expect("Error running DB migrations");
-
-        Ok(rocket)
-    } else {
-        Err(rocket)
-    }
 }
