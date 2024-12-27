@@ -58,16 +58,10 @@ async fn rocket() -> _ {
     // frontend
     if !config.frontend_asset_path.is_empty() {
         rocket = rocket
-            .mount(
-                "/admin/assets",
-                FileServer::from(config.frontend_asset_path.clone() + "/assets").rank(3),
-            )
+            .mount("/admin/assets", FileServer::from(config.frontend_asset_path.clone() + "/assets").rank(3))
             .mount(
                 "/admin",
-                SpaServer::new(
-                    config.frontend_asset_path.clone() + "/index.html",
-                    Options::IndexFile,
-                ),
+                SpaServer::new(config.frontend_asset_path.clone() + "/index.html", Options::IndexFile),
             )
     }
 
@@ -76,5 +70,6 @@ async fn rocket() -> _ {
         .mount("/", routes![admin_redirect])
         .mount("/hello", routes![hello])
         .mount("/api/this_site", routes::this_site::routes())
+        .mount("/api/this_region", routes::this_region::routes())
         .mount("/api/apps", routes::apps::routes())
 }

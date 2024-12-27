@@ -24,13 +24,6 @@ pub enum ThisSiteError {
 const SITE_CONFIG_ID: i32 = 0;
 
 impl ThisSiteRepo {
-    // pub async fn create_site(&self, name: &str) -> Result<(), sqlx::Error> {
-    //     // sqlx::query!("INSERT INTO site_configs (name) VALUES (?)", name)
-    //     //     .execute(&self.db)
-    //     //     .await
-    //     //     .map(|_| ())
-    // }
-
     pub fn init() -> Self {
         ThisSiteRepo {}
     }
