@@ -1,5 +1,5 @@
-import { Container } from "@chakra-ui/react"
-import { use, useEffect, useState } from "react"
+import { Center, Container, Spinner } from "@chakra-ui/react"
+import { useEffect, useState } from "react"
 
 import NewSite, { NewSiteData } from "../components/NewSite"
 import { SiteDetails, RegionDetails } from "../types"
@@ -24,45 +24,69 @@ function getStep(
 
 const api = new ThisSiteApi()
 
+const getSite = async (): Promise<SiteDetails | null> => {
+  const result = await api.show()
+  if ("Ok" in result) return result.Ok
+  return null
+}
+
+const getRegion = async (): Promise<RegionDetails | null> => {
+  const result = await api.showRegion()
+  if ("Ok" in result) return result.Ok
+  return null
+}
+
 export default function () {
   const [site, setSite] = useState<SiteDetails | null>(null)
   const [region, setRegion] = useState<RegionDetails | null>(null)
   const [step, setStep] = useState<SiteStep>(null)
+  const [loading, setLoading] = useState(true)
 
   const updateSite = (newSite: SiteDetails | null) => {
-    console.log("Updating site", site)
+    console.log("Updating site", newSite)
     setSite(newSite)
-    setStep(getStep(newSite, region))
   }
 
   const updateRegion = (newRegion: RegionDetails | null) => {
-    console.log("Updating region", region)
+    console.log("Updating region", newRegion)
     setRegion(newRegion)
-    setStep(getStep(site, newRegion))
   }
 
-  const fetchSite = () => {
-    console.log("EFFECT: fetchSite")
-    api.show().then((result: ApiResult<SiteDetails | null, any>) => {
-      if ("Ok" in result) updateSite(result.Ok)
+  const withLoading = async (fn: () => Promise<void>) => {
+    setLoading(true)
+    await fn()
+    setLoading(false)
+  }
+
+  const fetchRegion = async () => {
+    withLoading(async () => {
+      console.log("EFFECT: fetchRegion")
+      const newRegion = await getRegion()
+      updateRegion(newRegion)
     })
   }
 
-  const fetchRegion = () => {
-    console.log("EFFECT: fetchRegion")
-    api.showRegion().then((result: ApiResult<RegionDetails, any>) => {
-      if ("Ok" in result) updateRegion(result.Ok)
+  const fetchSiteAndRegion = async () => {
+    withLoading(async () => {
+      console.log("EFFECT: fetchSiteAndRegion")
+      const newSite = await getSite()
+      const newRegion = newSite ? await getRegion() : null
+      updateSite(newSite)
+      updateRegion(newRegion)
     })
   }
 
   const siteUnknown = step == null
 
   useEffect(() => {
-    if (site == null) fetchSite()
+    if (site == null) fetchSiteAndRegion()
   }, [])
   useEffect(() => {
     if (site != null && region == null) fetchRegion()
   }, [siteUnknown])
+  useEffect(() => {
+    setStep(getStep(site, region))
+  }, [site, region])
 
   const onSubmitNewSite = (data: NewSiteData) => {
     api.create(data.name).then((result: ApiResult<SiteDetails, any>) => {
@@ -76,6 +100,16 @@ export default function () {
       .then((result: ApiResult<RegionDetails, any>) => {
         if ("Ok" in result) updateRegion(result.Ok)
       })
+  }
+
+  if (loading) {
+    return (
+      <Container maxWidth={"2xl"}>
+        <Center>
+          <Spinner size="lg" opacity={0.5} />
+        </Center>
+      </Container>
+    )
   }
 
   return (
