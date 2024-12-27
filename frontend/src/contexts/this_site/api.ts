@@ -11,6 +11,10 @@ export default class ThisSiteApi extends BaseApi {
     return this.apiCall("this_site/create", "POST", { name })
   }
 
+  showRegion(): Promise<ApiResult<RegionDetails, any>> {
+    return this.apiCall("this_region")
+  }
+
   createRegion(
     name: string,
     description: string,
