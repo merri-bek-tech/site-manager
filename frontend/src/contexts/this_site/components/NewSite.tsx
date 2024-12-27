@@ -5,11 +5,11 @@ import { Field, Button, FormActions } from "../../../components"
 
 type SetSiteNameFunc = (name: string) => void
 
-interface NewSiteNameData {
+interface NewSiteData {
   name: string
 }
 
-export default function NewSiteName({
+export default function NewSite({
   setSiteName,
 }: {
   setSiteName: SetSiteNameFunc
@@ -18,8 +18,8 @@ export default function NewSiteName({
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<NewSiteNameData>()
-  const onSubmit: SubmitHandler<NewSiteNameData> = (data) => {
+  } = useForm<NewSiteData>()
+  const onSubmit: SubmitHandler<NewSiteData> = (data) => {
     setSiteName(data.name)
   }
 

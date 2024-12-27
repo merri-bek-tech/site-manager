@@ -1,9 +1,9 @@
 import { Container } from "@chakra-ui/react"
-import { use, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 
-import NewSiteName from "../components/NewSiteName"
+import NewSite from "../components/NewSite"
 import { SiteDetails } from "../types"
-import FindBioregion from "../components/FindRegion"
+import FindRegion from "../components/FindRegion"
 import ThisSiteApi from "../api"
 import { ApiResult } from "../../shared/types"
 
@@ -42,8 +42,8 @@ export default function () {
 
   return (
     <Container maxWidth={"2xl"}>
-      {step == "set_name" && <NewSiteName setSiteName={setSiteName} />}
-      {step == "find_bioregion" && site && <FindBioregion site={site} />}
+      {step == "set_name" && <NewSite setSiteName={setSiteName} />}
+      {step == "find_bioregion" && site && <FindRegion site={site} />}
     </Container>
   )
 }

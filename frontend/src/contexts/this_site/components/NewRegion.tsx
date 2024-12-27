@@ -50,10 +50,9 @@ export default function NewRegion() {
         >
           <Textarea
             {...register("description", {
-              required: "This is required",
               maxLength: {
-                value: 200,
-                message: "Must be less than 200 characters",
+                value: 255,
+                message: "Must be less than 255 characters",
               },
             })}
           />
