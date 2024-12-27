@@ -1,11 +1,12 @@
 import { Container } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 
-import NewSite from "../components/NewSite"
+import NewSite, { NewSiteData } from "../components/NewSite"
 import { SiteDetails } from "../types"
 import FindRegion from "../components/FindRegion"
 import ThisSiteApi from "../api"
 import { ApiResult } from "../../shared/types"
+import { NewRegionData } from "../components/NewRegion"
 
 type SiteStep = null | "set_name" | "find_bioregion"
 
@@ -34,16 +35,22 @@ export default function () {
     })
   }, [])
 
-  const setSiteName = (name: string) => {
-    api.create(name).then((result: ApiResult<SiteDetails, any>) => {
+  const onSubmitNewSite = (data: NewSiteData) => {
+    api.create(data.name).then((result: ApiResult<SiteDetails, any>) => {
       if ("Ok" in result) updateSite(result.Ok)
     })
   }
 
+  const onSubmitNewRegion = (data: NewRegionData) => {
+    console.log("Creating new region", data)
+  }
+
   return (
     <Container maxWidth={"2xl"}>
-      {step == "set_name" && <NewSite setSiteName={setSiteName} />}
-      {step == "find_bioregion" && site && <FindRegion site={site} />}
+      {step == "set_name" && <NewSite onSubmitNewSite={onSubmitNewSite} />}
+      {step == "find_bioregion" && site && (
+        <FindRegion site={site} onSubmitNewRegion={onSubmitNewRegion} />
+      )}
     </Container>
   )
 }

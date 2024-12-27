@@ -3,25 +3,22 @@ import { useForm, SubmitHandler } from "react-hook-form"
 
 import { Field, Button, FormActions } from "../../../components"
 
-type SetSiteNameFunc = (name: string) => void
-
-interface NewSiteData {
+export interface NewSiteData {
   name: string
 }
 
+export type SubmitNewSiteFunc = (data: NewSiteData) => void
+
 export default function NewSite({
-  setSiteName,
+  onSubmitNewSite,
 }: {
-  setSiteName: SetSiteNameFunc
+  onSubmitNewSite: SubmitNewSiteFunc
 }) {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<NewSiteData>()
-  const onSubmit: SubmitHandler<NewSiteData> = (data) => {
-    setSiteName(data.name)
-  }
 
   return (
     <VStack alignItems={"stretch"} width="100%">
@@ -36,7 +33,7 @@ export default function NewSite({
         </Text>
       </VStack>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmitNewSite)}>
         <VStack alignItems={"flex-start"} pt={8}>
           <Field
             label="Site Name"

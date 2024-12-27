@@ -3,23 +3,26 @@ import { useForm, SubmitHandler } from "react-hook-form"
 
 import { Field, FormActions, Button, FormFields } from "../../../components"
 
-interface NewRegionData {
+export interface NewRegionData {
   name: string
   description: string
 }
 
-export default function NewRegion() {
+export type SubmitNewRegionFunc = (data: NewRegionData) => void
+
+export default function NewRegion({
+  onSubmitNewRegion,
+}: {
+  onSubmitNewRegion: SubmitNewRegionFunc
+}) {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<NewRegionData>()
-  const onSubmit: SubmitHandler<NewRegionData> = (data) => {
-    console.log("onSubmit", data)
-  }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmitNewRegion)}>
       <FormFields>
         <Field
           label="Region Name"
