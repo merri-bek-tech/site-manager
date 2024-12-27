@@ -27,9 +27,13 @@ export default class BaseApi {
         headers,
         body: (body && JSON.stringify(body)) || undefined,
       })
-      return {
-        Ok: response.json(),
+      if (response.ok) {
+        const json = await response.json()
+        return {
+          Ok: json,
+        }
       }
+      throw new Error(`${response.status}: ${response.statusText}`)
     } catch (error) {
       console.error("Failed to connect to API: ", error)
       return {
