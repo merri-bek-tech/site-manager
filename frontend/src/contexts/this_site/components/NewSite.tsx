@@ -49,8 +49,8 @@ export default function NewSite({
                   message: "Must be less than 50 characters",
                 },
                 pattern: {
-                  value: /^[a-z]*$/,
-                  message: "Lowercase letters only",
+                  value: /^[a-z]+(-[a-z]+)*$/,
+                  message: "Lowercase letters only, no spaces, hyphens allowed",
                 },
               })}
             />

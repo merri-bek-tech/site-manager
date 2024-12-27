@@ -2,7 +2,7 @@ import { Container } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 
 import NewSite, { NewSiteData } from "../components/NewSite"
-import { SiteDetails } from "../types"
+import { SiteDetails, RegionDetails } from "../types"
 import FindRegion from "../components/FindRegion"
 import ThisSiteApi from "../api"
 import { ApiResult } from "../../shared/types"
@@ -42,7 +42,13 @@ export default function () {
   }
 
   const onSubmitNewRegion = (data: NewRegionData) => {
-    console.log("Creating new region", data)
+    api
+      .createRegion(data.name, data.description)
+      .then((result: ApiResult<RegionDetails, any>) => {
+        if ("Ok" in result) {
+          console.log("Region created", result.Ok)
+        }
+      })
   }
 
   return (

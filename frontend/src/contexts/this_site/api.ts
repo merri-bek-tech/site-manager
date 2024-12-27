@@ -1,6 +1,6 @@
 import { BaseApi } from "../shared"
 import { ApiResult } from "../shared/types"
-import { SiteDetails } from "./types"
+import { SiteDetails, RegionDetails } from "./types"
 
 export default class ThisSiteApi extends BaseApi {
   show(): Promise<ApiResult<SiteDetails | null, any>> {
@@ -9,5 +9,15 @@ export default class ThisSiteApi extends BaseApi {
 
   create(name: string): Promise<ApiResult<SiteDetails, any>> {
     return this.apiCall("this_site/create", "POST", { name })
+  }
+
+  createRegion(
+    name: string,
+    description: string,
+  ): Promise<ApiResult<RegionDetails, any>> {
+    return this.apiCall("this_region/create", "POST", {
+      name,
+      description,
+    })
   }
 }

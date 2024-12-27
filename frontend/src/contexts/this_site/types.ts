@@ -1,9 +1,10 @@
 export type SiteDetails = {
+  id: string
   name: string
-  uuid: string
 }
 
-type RegionDetails = {
+export type RegionDetails = {
+  id: string
   name: string
-  uuid: string
+  description: string
 }
