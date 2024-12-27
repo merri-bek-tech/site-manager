@@ -15,6 +15,10 @@ pub enum ThisSiteError {
     #[error("Cannot create site")]
     #[response(status = 409)]
     CannotCreate(String),
+
+    #[error("Site not found")]
+    #[response(status = 404)]
+    NotFound(String),
 }
 
 const SITE_CONFIG_ID: i32 = 0;
@@ -44,7 +48,10 @@ impl ThisSiteRepo {
         )
         .fetch_one(&mut ***db)
         .await
-        .map_err(|_| ThisSiteError::InternalServerError("Database error".to_string()))?;
+        .map_err(|e| match e {
+            sqlx::Error::RowNotFound => ThisSiteError::NotFound("Site not found".to_string()),
+            _ => ThisSiteError::InternalServerError("Database error".to_string()),
+        })?;
 
         return Ok(site);
     }

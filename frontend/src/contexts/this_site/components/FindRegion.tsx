@@ -1,6 +1,7 @@
 import { VStack, Text, Tabs } from "@chakra-ui/react"
 import { SiteDetails } from "../types"
 import { LuMapPinHouse, LuMapPinPlus } from "react-icons/lu"
+import NewRegion from "./NewRegion"
 
 export default function FindRegion({ site }: { site: SiteDetails }) {
   return (
@@ -32,7 +33,7 @@ export default function FindRegion({ site }: { site: SiteDetails }) {
           </Tabs.Trigger>
         </Tabs.List>
         <Tabs.Content value="members">
-          Todo: Form to create a new region.
+          <NewRegion />
         </Tabs.Content>
         <Tabs.Content value="projects">
           Todo: Form to join an existing region.

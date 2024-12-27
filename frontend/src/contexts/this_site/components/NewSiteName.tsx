@@ -1,9 +1,7 @@
-import { Flex, Text, Input, VStack } from "@chakra-ui/react"
+import { Text, Input, VStack } from "@chakra-ui/react"
 import { useForm, SubmitHandler } from "react-hook-form"
 
-import { Field } from "../../../components/ui/field"
-import { Button } from "../../../components/ui/button"
-import { SiteDetails } from "../types"
+import { Field, Button, FormActions } from "../../../components"
 
 type SetSiteNameFunc = (name: string) => void
 
@@ -61,11 +59,11 @@ export default function NewSiteName({
             />
           </Field>
 
-          <Flex mt={2} justify="flex-end" width="100%">
+          <FormActions>
             <Button loading={isSubmitting} type="submit">
               Set Name
             </Button>
-          </Flex>
+          </FormActions>
         </VStack>
       </form>
     </VStack>
