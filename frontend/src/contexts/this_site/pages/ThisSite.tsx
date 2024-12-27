@@ -22,14 +22,14 @@ export default function () {
   const [site, setSite] = useState<SiteDetails | null>(null)
   const [step, setStep] = useState<SiteStep>(null)
 
-  const updateSite = (site: SiteDetails) => {
+  const updateSite = (site: SiteDetails | null) => {
     console.log("Updating site", site)
     setSite(site)
     setStep(getStep(site))
   }
 
   useEffect(() => {
-    api.show().then((result: ApiResult<SiteDetails, any>) => {
+    api.show().then((result: ApiResult<SiteDetails | null, any>) => {
       if ("Ok" in result) updateSite(result.Ok)
     })
   }, [])

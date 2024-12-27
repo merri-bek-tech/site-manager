@@ -3,7 +3,7 @@ import { ApiResult } from "../shared/types"
 import { SiteDetails } from "./types"
 
 export default class ThisSiteApi extends BaseApi {
-  show(): Promise<ApiResult<SiteDetails, any>> {
+  show(): Promise<ApiResult<SiteDetails | null, any>> {
     return this.apiCall("this_site")
   }
 

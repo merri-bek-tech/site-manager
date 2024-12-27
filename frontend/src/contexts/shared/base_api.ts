@@ -32,6 +32,12 @@ export default class BaseApi {
         return {
           Ok: json,
         }
+      } else {
+        if (response.status == 404) {
+          return {
+            Ok: null,
+          }
+        }
       }
       throw new Error(`${response.status}: ${response.statusText}`)
     } catch (error) {
