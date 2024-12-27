@@ -21,5 +21,5 @@ pub struct SiteConfig {
 pub struct Region {
     pub id: String,
     pub name: String,
-    pub description: String,
+    pub description: Option<String>,
 }

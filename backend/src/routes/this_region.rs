@@ -16,6 +16,15 @@ async fn create(mut db: Connection<MainDb>, data: Json<CreateRegionData>) -> Res
         .map(|region| Json(region))
 }
 
+#[get("/", format = "json")]
+async fn show(mut db: Connection<MainDb>) -> Result<Json<Region>, ThisRegionError> {
+    let repo = ThisRegionRepo::init();
+
+    repo.get_region(&mut db)
+        .await
+        .map(|region| Json(region))
+}
+
 pub fn routes() -> Vec<Route> {
-    routes![create]
+    routes![create, show]
 }

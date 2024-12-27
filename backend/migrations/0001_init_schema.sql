@@ -1,13 +1,14 @@
 -- Add migration script here
 CREATE TABLE regions (
     id VARCHAR(36) PRIMARY KEY NOT NULL,
-    name VARCHAR(255) NOT NULL
+    name VARCHAR(50) NOT NULL,
+    description VARCHAR(255)
 );
 
 CREATE TABLE sites (
     id VARCHAR(36) PRIMARY KEY NOT NULL,
     region_id VARCHAR(36) ,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(50) NOT NULL,
     FOREIGN KEY (region_id) REFERENCES regions(id)
 );
 

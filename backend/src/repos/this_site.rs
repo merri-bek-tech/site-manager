@@ -1,5 +1,5 @@
 use super::entities::Site;
-use crate::infra::db::MainDb;
+use crate::{infra::db::MainDb, repos::helpers::SITE_CONFIG_ID};
 use rocket_db_pools::Connection;
 use thiserror::Error;
 use uuid::Uuid;
@@ -20,8 +20,6 @@ pub enum ThisSiteError {
     #[response(status = 404)]
     NotFound(String),
 }
-
-const SITE_CONFIG_ID: i32 = 0;
 
 impl ThisSiteRepo {
     pub fn init() -> Self {
