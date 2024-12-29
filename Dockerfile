@@ -28,10 +28,12 @@ RUN cp /app/target/$(cat /app/.platform)/release/site-manager /app/site-manager
 # RUNNER
 FROM ubuntu AS runner
 COPY --from=rustbuilder /app/site-manager /app/backend/site-manager
+COPY --from=rustbuilder /app/Rocket.toml /app/backend/Rocket.toml
 COPY --from=vitebuilder /app/dist /app/frontend
 ENV ROCKET_ADDRESS=0.0.0.0
 ENV ROCKET_PORT=80
 ENV ROCKET_FRONTEND_ASSET_PATH=/app/frontend
+ENV DATABASE_URL=sqlite:site-manager.db
 EXPOSE 8000
 WORKDIR /app/backend
 CMD ["./site-manager"]
