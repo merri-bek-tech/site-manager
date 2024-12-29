@@ -22,7 +22,7 @@ COPY deployment/cargo-config.toml ./.cargo/config
 
 # Compile the backend
 COPY ./backend .
-RUN RUSTFLAGS=-g cargo build --release --target $(cat /app/.platform)
+RUN RUSTFLAGS=-g SQLX_OFFLINE=true cargo build --release --target $(cat /app/.platform)
 RUN cp /app/target/$(cat /app/.platform)/release/site-manager /app/site-manager
 
 # RUNNER
