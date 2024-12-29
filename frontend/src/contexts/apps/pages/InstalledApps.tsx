@@ -6,7 +6,7 @@ import AppList from "../components/AppList"
 import { ApiResult } from "../../shared/types"
 
 export default function InstalledApps() {
-  const [appsResult, setAppsResult] = useState<ApiResult | null>(null)
+  const [appsResult, setAppsResult] = useState<ApiResult<any, any> | null>(null)
 
   const api = useMemo(() => new Api(), [])
 
