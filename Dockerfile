@@ -33,7 +33,7 @@ COPY --from=vitebuilder /app/dist /app/frontend
 ENV ROCKET_ADDRESS=0.0.0.0
 ENV ROCKET_PORT=8000
 ENV ROCKET_FRONTEND_ASSET_PATH=/app/frontend
-ENV DATABASE_URL=sqlite:site-manager.db
+ENV DATABASE_URL=sqlite:/app/site-manager.db
 EXPOSE 8000
 WORKDIR /app/backend
 CMD ["./site-manager"]
