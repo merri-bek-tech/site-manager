@@ -8,6 +8,7 @@ use rocket::tokio;
 use serde::{Deserialize, Serialize};
 use std::sync::{Arc, Mutex};
 
+use crate::panda_comms::manual_discovery::ManualDiscovery;
 use crate::panda_comms::messages::Message;
 use crate::panda_comms::site_messages::{SiteMessages, SiteRegistration};
 use crate::panda_comms::sites::Sites;
@@ -52,6 +53,7 @@ impl P2PandaContainer {
 
         let network: Network<ChatTopic> = NetworkBuilder::new(network_id)
             .discovery(LocalDiscovery::new()?)
+            .discovery(ManualDiscovery::new()?)
             .build()
             .await?;
 

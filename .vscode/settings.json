@@ -18,7 +18,7 @@
   },
   "explorerExclude.backup": {},
   "rust-analyzer.cargo.sysroot": "discover",
-  "cSpell.words": ["Aquadoggo", "Liftoff", "Scrib"],
+  "cSpell.words": ["Aquadoggo", "iroh", "Liftoff", "Scrib"],
   "ansible.python.interpreterPath": "/bin/python3",
   "editor.wordWrapColumn": 140
 }
