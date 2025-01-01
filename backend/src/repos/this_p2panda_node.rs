@@ -55,6 +55,8 @@ impl ThisP2PandaNodeRepo {
         self.set_private_key_hex(db, new_private_key.to_hex())
             .await?;
 
+        println!("Created new private key");
+
         return Ok(new_private_key);
     }
 
@@ -72,8 +74,6 @@ impl ThisP2PandaNodeRepo {
         )
         .execute(&mut *connection)
         .await;
-
-        println!("Wrote private key to DB: {:?}", private_key_hex);
 
         return Ok(());
     }
@@ -94,8 +94,6 @@ impl ThisP2PandaNodeRepo {
         .fetch_one(&mut *connection)
         .await
         .map_err(|_| ThisP2PandaNodeError::InternalServerError("Database error".to_string()))?;
-
-        println!("Got private key from DBL: {:?}", result.private_key_hex);
 
         return Ok(result.private_key_hex);
     }
