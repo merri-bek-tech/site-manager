@@ -7,6 +7,7 @@ import {
 } from "@chakra-ui/react"
 import { Link } from "react-router-dom"
 import { ColorModeButton, useColorModeValue } from "./ui/color-mode"
+import packageJson from "../../package.json"
 
 export default function Navbar() {
   return (
@@ -18,9 +19,11 @@ export default function Navbar() {
               <Link to="/">Site Manager</Link>{" "}
               <ExternalLink
                 variant="underline"
-                href={APP_VERSION_URL + "/releases/tag/v" + APP_VERSION}
+                href={
+                  packageJson.homepage + "/releases/tag/v" + packageJson.version
+                }
               >
-                v{APP_VERSION}
+                v{packageJson.version}
               </ExternalLink>
             </Box>
             <Box>
