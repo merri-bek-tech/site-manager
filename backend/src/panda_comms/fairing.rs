@@ -23,11 +23,11 @@ impl Fairing for P2PandaCommsFairing {
             let repo = ThisP2PandaNodeRepo::init();
 
             match repo.get_or_create_private_key(db).await {
-                Ok(_) => {
+                Ok(private_key) => {
                     println!("Got private key");
 
                     if let Some(container) = rocket.state::<P2PandaContainer>() {
-                        if let Err(e) = container.start().await {
+                        if let Err(e) = container.start(private_key).await {
                             println!("Failed to start P2PandaContainer: {:?}", e);
                         }
                     } else {

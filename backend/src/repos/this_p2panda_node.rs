@@ -22,7 +22,7 @@ impl ThisP2PandaNodeRepo {
     }
 
     pub async fn get_or_create_private_key(&self, db: &MainDb) -> Result<PrivateKey, ThisP2PandaNodeError> {
-        let private_key: Option<PrivateKey> = self.get_private_key(db).await?;
+        let private_key = self.get_private_key(db).await?;
 
         match private_key {
             None => {

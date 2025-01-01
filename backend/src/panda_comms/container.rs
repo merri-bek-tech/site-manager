@@ -36,7 +36,7 @@ pub struct P2PandaContainer {
 }
 
 impl P2PandaContainer {
-    pub async fn start(&self) -> Result<()> {
+    pub async fn start(&self, private_key: PrivateKey) -> Result<()> {
         let mut sites = Sites::build();
 
         println!("P2Panda: starting up");
@@ -48,8 +48,6 @@ impl P2PandaContainer {
         let network_id: NetworkId = Hash::new(network_slug).into();
 
         let topic = ChatTopic::new("site_management");
-
-        let private_key = PrivateKey::new();
 
         let network: Network<ChatTopic> = NetworkBuilder::new(network_id)
             .discovery(LocalDiscovery::new()?)
