@@ -15,5 +15,7 @@ CREATE TABLE sites (
 CREATE TABLE site_configs (
     id INT PRIMARY KEY NOT NULL,
     this_site_id VARCHAR(36),
+    private_key_hex VARCHAR(64),
+    public_key_hex VARCHAR(64),
     FOREIGN KEY (this_site_id) REFERENCES sites(id)
 );

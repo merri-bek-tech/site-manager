@@ -1,0 +1,38 @@
+{
+  "db_name": "SQLite",
+  "query": "\n            SELECT *\n            FROM site_configs\n            WHERE site_configs.id = ?\n            LIMIT 1\n            ",
+  "describe": {
+    "columns": [
+      {
+        "name": "id",
+        "ordinal": 0,
+        "type_info": "Int64"
+      },
+      {
+        "name": "this_site_id",
+        "ordinal": 1,
+        "type_info": "Text"
+      },
+      {
+        "name": "private_key_hex",
+        "ordinal": 2,
+        "type_info": "Text"
+      },
+      {
+        "name": "public_key_hex",
+        "ordinal": 3,
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": [
+      false,
+      true,
+      true,
+      true
+    ]
+  },
+  "hash": "3345c5d42ff5d92db64c31eefdc405f2ca9c38146a66c38ad57c6fb3929d5089"
+}

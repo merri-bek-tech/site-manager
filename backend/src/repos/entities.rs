@@ -23,3 +23,9 @@ pub struct Region {
     pub name: String,
     pub description: Option<String>,
 }
+
+#[derive(sqlx::FromRow, Serialize, Deserialize)]
+#[serde(crate = "rocket::serde")]
+pub struct PrivateKeyRow {
+    pub private_key_hex: Option<String>,
+}

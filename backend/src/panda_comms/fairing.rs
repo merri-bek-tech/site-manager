@@ -22,7 +22,7 @@ impl Fairing for P2PandaCommsFairing {
         if let Some(db) = MainDb::fetch(&rocket) {
             let repo = ThisP2PandaNodeRepo::init();
 
-            match repo.get_private_key(db).await {
+            match repo.get_or_create_private_key(db).await {
                 Ok(_) => {
                     println!("Got private key");
 
