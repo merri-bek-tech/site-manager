@@ -3,6 +3,12 @@
   "private": true,
   "version": "0.2.7",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/merri-bek-tech/site-manager.git"
+  },
+  "licence": "GPL-3.0",
+  "homepage": "https://github.com/merri-bek-tech/site-manager",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -21,6 +27,7 @@
   },
   "devDependencies": {
     "@chakra-ui/cli": "^3.2.3",
+    "@types/node": "^22.10.3",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@typescript-eslint/eslint-plugin": "^8.14.0",

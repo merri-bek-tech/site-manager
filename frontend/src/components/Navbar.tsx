@@ -1,4 +1,10 @@
-import { Box, Flex, Stack, Button } from "@chakra-ui/react"
+import {
+  Box,
+  Flex,
+  Stack,
+  Button,
+  Link as ExternalLink,
+} from "@chakra-ui/react"
 import { Link } from "react-router-dom"
 import { ColorModeButton, useColorModeValue } from "./ui/color-mode"
 
@@ -9,7 +15,13 @@ export default function Navbar() {
         <Flex alignItems={"center"} justifyContent={"space-between"}>
           <Stack direction="row" alignItems="center">
             <Box>
-              <Link to="/">Site Manager</Link>
+              <Link to="/">Site Manager</Link>{" "}
+              <ExternalLink
+                variant="underline"
+                href={APP_VERSION_URL + "/releases/tag/v" + APP_VERSION}
+              >
+                v{APP_VERSION}
+              </ExternalLink>
             </Box>
             <Box>
               <Link to="/apps">
