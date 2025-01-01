@@ -4,6 +4,7 @@ use rocket_db_pools::Database;
 
 use crate::infra::db::MainDb;
 use crate::panda_comms::container::P2PandaContainer;
+use crate::repos::this_p2panda_node::ThisP2PandaNodeRepo;
 
 #[derive(Default)]
 pub struct P2PandaCommsFairing {}
@@ -18,13 +19,24 @@ impl Fairing for P2PandaCommsFairing {
     }
 
     async fn on_liftoff(&self, rocket: &Rocket<Orbit>) {
-        if let Some(_db) = MainDb::fetch(&rocket) {
-            if let Some(container) = rocket.state::<P2PandaContainer>() {
-                if let Err(e) = container.start().await {
-                    println!("Failed to start P2PandaContainer: {:?}", e);
+        if let Some(db) = MainDb::fetch(&rocket) {
+            let repo = ThisP2PandaNodeRepo::init();
+
+            match repo.get_private_key(db).await {
+                Ok(_) => {
+                    println!("Got private key");
+
+                    if let Some(container) = rocket.state::<P2PandaContainer>() {
+                        if let Err(e) = container.start().await {
+                            println!("Failed to start P2PandaContainer: {:?}", e);
+                        }
+                    } else {
+                        println!("P2PandaContainer state not found.");
+                    }
                 }
-            } else {
-                println!("P2PandaContainer state not found.");
+                Err(_) => {
+                    println!("Failed to get private key");
+                }
             }
         } else {
             println!("MainDb state not found, wont start Panda node");

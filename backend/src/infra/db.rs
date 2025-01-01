@@ -1,9 +1,16 @@
 use rocket::{fairing, Build, Rocket};
 use rocket_db_pools::Database;
+use sqlx::Sqlite;
 
 #[derive(Database)]
 #[database("main_db")]
 pub struct MainDb(sqlx::SqlitePool);
+
+impl MainDb {
+    pub fn sqlite_pool(&self) -> &sqlx::Pool<Sqlite> {
+        &self.0
+    }
+}
 
 pub async fn run_migrations(rocket: Rocket<Build>) -> fairing::Result {
     if let Some(db) = MainDb::fetch(&rocket) {
