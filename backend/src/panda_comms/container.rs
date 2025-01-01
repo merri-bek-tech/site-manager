@@ -63,7 +63,16 @@ impl P2PandaContainer {
             }
         });
 
-        announce_site(&private_key, &site_name, &tx).await?;
+        // spawn a task to announce the site every 30 seconds
+        tokio::task::spawn(async move {
+            let mut interval = tokio::time::interval(tokio::time::Duration::from_secs(30));
+            loop {
+                interval.tick().await;
+                announce_site(&private_key, &site_name, &tx)
+                    .await
+                    .ok();
+            }
+        });
 
         // put the network in the container
         let mut network_lock = self.network.lock().unwrap();
@@ -104,19 +113,10 @@ fn handle_message(message: Message<SiteMessages>, sites: &mut Sites) {
     }
 }
 
-async fn announce_site(
-    private_key: &PrivateKey,
-    name: &str,
-    tx: &tokio::sync::mpsc::Sender<ToNetwork>,
-) -> Result<()> {
+async fn announce_site(private_key: &PrivateKey, name: &str, tx: &tokio::sync::mpsc::Sender<ToNetwork>) -> Result<()> {
     println!("Announcing myself: {}", name);
     tx.send(ToNetwork::Message {
-        bytes: Message::sign_and_encode(
-            private_key,
-            SiteMessages::SiteRegistration(SiteRegistration {
-                name: name.to_string(),
-            }),
-        )?,
+        bytes: Message::sign_and_encode(private_key, SiteMessages::SiteRegistration(SiteRegistration { name: name.to_string() }))?,
     })
     .await?;
     Ok(())
