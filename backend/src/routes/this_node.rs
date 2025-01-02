@@ -1,3 +1,4 @@
+use iroh_net::NodeAddr;
 use rocket::serde::json::Json;
 use rocket::serde::{Deserialize, Serialize};
 use rocket::{Route, State};
@@ -8,7 +9,8 @@ use crate::panda_comms::container::P2PandaContainer;
 #[derive(sqlx::FromRow, Serialize, Deserialize)]
 #[serde(crate = "rocket::serde")]
 pub struct NodeDetails {
-    pub public_key: String,
+    pub panda_node_id: String,
+    pub iroh_node_addr: NodeAddr,
 }
 
 #[derive(Debug, Error, Responder)]
@@ -18,10 +20,16 @@ pub enum ThisNodeError {}
 async fn show(panda_container: &State<P2PandaContainer>) -> Result<Json<NodeDetails>, ThisNodeError> {
     let public_key: String = panda_container
         .get_public_key()
+        .await
         .unwrap()
         .to_string();
 
-    let dummy_details = NodeDetails { public_key };
+    let node_addr = panda_container.get_node_addr().await;
+
+    let dummy_details = NodeDetails {
+        panda_node_id: public_key,
+        iroh_node_addr: node_addr,
+    };
 
     Ok(Json(dummy_details))
 }

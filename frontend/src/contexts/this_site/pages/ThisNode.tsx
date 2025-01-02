@@ -1,4 +1,4 @@
-import { VStack, Text, Table } from "@chakra-ui/react"
+import { VStack, Text, Table, Box } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import ThisSiteApi from "../api"
 import { NodeDetails } from "../types"
@@ -40,8 +40,18 @@ export default function ThisNode() {
         </Table.Header>
         <Table.Body>
           <Table.Row>
-            <Table.Cell>Public key</Table.Cell>
-            <Table.Cell>{node.public_key}</Table.Cell>
+            <Table.Cell>Panda Node Id</Table.Cell>
+            <Table.Cell>
+              <pre>{node.panda_node_id}</pre>
+            </Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell>Iroh Node Addr</Table.Cell>
+            <Table.Cell>
+              <Box maxW={"md"}>
+                <pre>{JSON.stringify(node.iroh_node_addr, null, 2)}</pre>
+              </Box>
+            </Table.Cell>
           </Table.Row>
         </Table.Body>
       </Table.Root>

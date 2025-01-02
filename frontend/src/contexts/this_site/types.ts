@@ -10,5 +10,6 @@ export type RegionDetails = {
 }
 
 export type NodeDetails = {
-  public_key: string
+  panda_node_id: string
+  iroh_node_addr: any
 }

@@ -7,7 +7,8 @@ use p2panda_net::{FromNetwork, Network, NetworkBuilder, NetworkId, ToNetwork, To
 use p2panda_sync::TopicQuery;
 use rocket::tokio;
 use serde::{Deserialize, Serialize};
-use std::sync::{Arc, Mutex};
+use std::sync::Arc;
+use tokio::sync::Mutex;
 
 use crate::panda_comms::manual_discovery::ManualDiscovery;
 use crate::panda_comms::messages::Message;
@@ -76,20 +77,25 @@ impl P2PandaContainer {
         });
 
         // put the network in the container
-        let mut network_lock = self.network.lock().unwrap();
+        let mut network_lock = self.network.lock().await;
         *network_lock = Some(network);
 
         Ok(())
     }
 
-    pub fn get_public_key(&self) -> Result<String> {
-        let network = self.network.lock().unwrap();
-        let network = network
-            .as_ref()
-            .ok_or_else(|| anyhow::anyhow!("Network not started"))?;
-
+    pub async fn get_public_key(&self) -> Result<String, Box<dyn std::error::Error>> {
+        let network = self.network.lock().await;
+        let network = network.as_ref().ok_or("Network not started")?;
         let node_id = network.node_id();
         Ok(node_id.to_string())
+    }
+
+    pub async fn get_node_addr(&self) -> NodeAddr {
+        let network = self.network.lock().await;
+        let network = network.as_ref().unwrap();
+        let endpoint = network.endpoint();
+        let node_addr = endpoint.node_addr().await.unwrap();
+        node_addr
     }
 }
 
