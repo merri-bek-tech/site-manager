@@ -8,3 +8,7 @@ export type RegionDetails = {
   name: string
   description: string
 }
+
+export type NodeDetails = {
+  public_key: string
+}

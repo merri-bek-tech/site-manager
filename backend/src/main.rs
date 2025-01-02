@@ -71,5 +71,6 @@ async fn rocket() -> _ {
         .mount("/hello", routes![hello])
         .mount("/api/this_site", routes::this_site::routes())
         .mount("/api/this_region", routes::this_region::routes())
+        .mount("/api/this_node", routes::this_node::routes())
         .mount("/api/apps", routes::apps::routes())
 }
