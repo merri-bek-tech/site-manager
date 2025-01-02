@@ -1,5 +1,6 @@
 use anyhow::Result;
 use gethostname::gethostname;
+use iroh_net::NodeAddr;
 use p2panda_core::{Hash, PrivateKey};
 use p2panda_discovery::mdns::LocalDiscovery;
 use p2panda_net::{FromNetwork, Network, NetworkBuilder, NetworkId, ToNetwork, TopicId};
@@ -79,6 +80,16 @@ impl P2PandaContainer {
         *network_lock = Some(network);
 
         Ok(())
+    }
+
+    pub fn get_public_key(&self) -> Result<String> {
+        let network = self.network.lock().unwrap();
+        let network = network
+            .as_ref()
+            .ok_or_else(|| anyhow::anyhow!("Network not started"))?;
+
+        let node_id = network.node_id();
+        Ok(node_id.to_string())
     }
 }
 
