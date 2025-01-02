@@ -4,7 +4,7 @@ import { ChakraProvider } from "@chakra-ui/react"
 import { ColorModeProvider } from "./components/ui/color-mode"
 import { InstalledApps } from "./contexts/apps"
 import { themeSystem } from "./theme"
-import { ThisSite } from "./contexts/this_site"
+import { ThisSite, ThisNode } from "./contexts/this_site"
 
 const router = createBrowserRouter(
   [
@@ -13,6 +13,7 @@ const router = createBrowserRouter(
       element: <Layout />,
       children: [
         { path: "", element: <ThisSite /> },
+        { path: "node", element: <ThisNode /> },
         { path: "apps", element: <InstalledApps /> },
       ],
     },

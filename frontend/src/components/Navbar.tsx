@@ -27,6 +27,11 @@ export default function Navbar() {
               </ExternalLink>
             </Box>
             <Box>
+              <Link to="/node">
+                <Button colorPalette="blue" variant="ghost">
+                  P2Panda
+                </Button>
+              </Link>
               <Link to="/apps">
                 <Button colorPalette="blue" variant="ghost">
                   Apps
